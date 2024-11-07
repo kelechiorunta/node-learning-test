@@ -16,6 +16,22 @@
         const apibtn_II = document.querySelector('.showlogin');
         const loginbtn = document.querySelector('.logUser');
         const showUsersbtn = document.querySelector('.showUsers');
+        const editProfilebtn = document.querySelector('.editProfile');
+
+        editProfilebtn.addEventListener('click', function() {
+            
+            const xhttp =  new XMLHttpRequest();
+
+            xhttp.onreadystatechange = function() {
+                if (this.readyState === 4 && this.status === 200) {
+                    document.querySelector('.viewapi').innerHTML = this.responseText;
+                }
+            }
+
+            xhttp.open('GET', '/profile');
+            xhttp.send();
+            
+        })
 
         showUsersbtn.addEventListener('click', function () {
             const xhttp = new XMLHttpRequest();

@@ -80,7 +80,7 @@ button:hover {
     font-size: 1.25rem;
   }
 }
-.form-container {
+.form-container, .profile-container {
   width: 100%;
   max-width: 40%;
   padding: 2rem;
@@ -90,33 +90,33 @@ button:hover {
   margin: auto;
   text-align: center;
 }
-.form-container h2 {
+.form-container h2, .profile-container h2 {
   font-size: 1.8rem;
   color: #333;
   margin-bottom: 1.5rem;
 }
-.form-container form {
+.form-container form, .profile-container form {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
-.form-container form label {
+.form-container form label, .profile-container form label {
   text-align: left;
   font-weight: bold;
   color: #555;
   font-size: 0.9rem;
 }
-.form-container form input {
+.form-container form input, .profile-container form input {
   padding: 0.8rem;
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 1rem;
 }
-.form-container form input:focus {
+.form-container form input:focus, .profile-container form input:focus {
   border-color: #007bff;
   outline: none;
 }
-.form-container form button {
+.form-container form button, .profile-container form button {
   padding: 0.8rem;
   border: none;
   border-radius: 4px;
@@ -126,19 +126,19 @@ button:hover {
   cursor: pointer;
   transition: background-color 0.3s;
 }
-.form-container form button:hover {
+.form-container form button:hover, .profile-container form button:hover {
   background-color: #0056b3;
 }
-.form-container form .switch-form {
+.form-container form .switch-form, .profile-container form .switch-form {
   font-size: 0.9rem;
   color: #555;
   margin-top: 1rem;
 }
-.form-container form .switch-form a {
+.form-container form .switch-form a, .profile-container form .switch-form a {
   color: #007bff;
   text-decoration: none;
 }
-.form-container form .switch-form a:hover {
+.form-container form .switch-form a:hover, .profile-container form .switch-form a:hover {
   text-decoration: underline;
 }
 
@@ -166,4 +166,151 @@ button:hover {
 table, tr, thead, tbody, td, th {
   border: 1px solid;
   border-collapse: collapse;
+}
+
+.profile-container {
+  max-width: 60%;
+  margin: 40px auto;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 8px;
+  text-align: center;
+  color: #333;
+}
+
+.profile-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.profile-picture {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border: 4px solid #007bff;
+  margin-bottom: 10px;
+}
+
+.username {
+  font-size: 1.8rem;
+  margin: 0;
+  color: #333;
+}
+
+.email {
+  color: #666;
+  font-size: 1rem;
+  margin-top: 5px;
+}
+
+.profile-info {
+  text-align: left;
+  margin: 20px 0;
+}
+.profile-info h3 {
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+  color: #007bff;
+}
+
+.details-list {
+  list-style: none;
+  padding: 0;
+}
+.details-list li {
+  padding: 8px 0;
+  border-bottom: 1px solid #ddd;
+  font-size: 1rem;
+}
+.details-list li strong {
+  color: #333;
+}
+
+/* Profile Form Styling */
+.profile-form {
+  margin: 20px 0;
+  text-align: left;
+}
+.profile-form h3 {
+  font-size: 1.4rem;
+  color: #007bff;
+  margin-bottom: 15px;
+}
+.profile-form form {
+  display: flex;
+  flex-direction: column;
+}
+.profile-form .form-group {
+  margin-bottom: 15px;
+}
+.profile-form .form-group label {
+  display: block;
+  font-size: 1rem;
+  margin-bottom: 5px;
+  color: #555;
+}
+.profile-form .form-group input[type=text],
+.profile-form .form-group input[type=email],
+.profile-form .form-group input[type=file] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: border-color 0.2s ease-in;
+}
+.profile-form .form-group input[type=text]:focus,
+.profile-form .form-group input[type=email]:focus,
+.profile-form .form-group input[type=file]:focus {
+  border-color: #007bff;
+  outline: none;
+}
+.profile-form .save-btn {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.profile-form .save-btn:hover {
+  background-color: #0056b3;
+}
+
+.profile-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+.profile-actions .edit-profile-btn,
+.profile-actions .logout-btn {
+  flex: 1;
+  padding: 10px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.profile-actions .edit-profile-btn {
+  background-color: #007bff;
+  color: #fff;
+  transition: background-color 0.2s;
+}
+.profile-actions .edit-profile-btn:hover {
+  background-color: #0056b3;
+}
+.profile-actions .logout-btn {
+  background-color: #dc3545;
+  color: #fff;
+  transition: background-color 0.2s;
+}
+.profile-actions .logout-btn:hover {
+  background-color: #c82333;
 }/*# sourceMappingURL=style.css.map */

@@ -252,6 +252,11 @@ app.post('/upload', (req, res, next) => {
     
 });
 
+app.get('/profile', (req, res) => {
+    const absolutePath = path.join(__dirname, '/public/profile.html');
+    res.sendFile(absolutePath);
+})
+
 // Route for handling login
 app.post('/login', upload.array(), async (req, res) => {
     const { username, password } = req.body;
