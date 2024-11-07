@@ -10,17 +10,47 @@ const multer = require('multer');
 const upload = multer();
 const bcrypt = require('bcrypt');
 const eventEmitter = new events.EventEmitter();
-const { connectDB } = require('./db')
-const User = require('./models/UserModel')
+const { connectDB } = require('./db');
+const User = require('./models/UserModel');
+const MongoStore = require('connect-mongo');
 require('dotenv').config();
 const app = express();
 
 connectDB();
 
+const store = MongoStore.create({
+    mongoUrl: process.env.MONGO_URI,  // Your MongoDB connection string
+    collection: 'sessions',        // Collection to store sessions
+    ttl: 24 * 60 * 60,
+    autoRemove:'native',
+  });
+  
+  store.on('error', function(error) {
+    console.log(error);
+  });
+
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}));
 app.use('/public', express.static(path.join(__dirname, '/public')));
 app.use(session({secret: "Your secret key"}));
+app.enable('trust proxy');
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    // rolling:true,
+    // unset: 'destroy',
+    saveUninitialized: false,
+    store: store,
+    cookie: {
+        maxAge: 24 * 60 * 60 * 1000,  // 1 day
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production'? true : false,  // True if you're running on HTTPS
+        sameSite: process.env.NODE_ENV === 'production'? 'none' : 'Lax', //'Lax',
+        domain: process.env.NODE_ENV === 'production'? 'node-ajax-project.vercel.app' : 'localhost',
+        path:'/'
+
+    }
+}));
 // app.use(upload.array());
   //Assign the event handler to an event:
  
@@ -59,11 +89,18 @@ fs.mkdirSync(uploadDir, { recursive: true });
 ;
 
 app.get('/', function(req, res){
-        const absolutePath = path.join(__dirname, '/public/signup.html');
+        const absolutePath = path.join(__dirname, '/public/login.html');
         res.sendFile(absolutePath);
     // eventEmitter.emit('upload');
     
 })
+
+// app.get('*', function(req, res){
+//     const absolutePath = path.join(__dirname, '/public/login.html');
+//     res.sendFile(absolutePath);
+// // eventEmitter.emit('upload');
+
+// })
 
 app.get('/kelechi', function(req, res){
     const absolutePath = path.join(__dirname, '/public/signup.html');
@@ -120,6 +157,11 @@ app.post('/signup', upload.array(), async(req, res, next) => {
         return res.status(500).json({error: err})
     }
      
+  })
+
+  app.get('/users', async function(req, res){
+    const allUsers = await User.find();
+    res.send(allUsers)
   })
 
   app.post('/design', upload.array(), async (req, res) => {
@@ -315,7 +357,7 @@ app.get('/session', checksignin, (req, res) => {
    
 // })
 
-app.use('/protectedpage', checksignin)
+// app.use('/protectedpage', checksignin)
 
 
 

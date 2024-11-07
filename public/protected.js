@@ -1,3 +1,5 @@
+
+
     const xhttp = new XMLHttpRequest();
 
     // Initial load of the Signup html on the dashboard
@@ -13,6 +15,60 @@
         const apibtn = document.querySelector('.showapi');
         const apibtn_II = document.querySelector('.showlogin');
         const loginbtn = document.querySelector('.logUser');
+        const showUsersbtn = document.querySelector('.showUsers');
+
+        showUsersbtn.addEventListener('click', function () {
+            const xhttp = new XMLHttpRequest();
+            
+            xhttp.onreadystatechange = function () {
+                if (this.readyState === 4 && this.status === 200) {
+                    const responseinJSON = JSON.parse(this.responseText);
+        
+                    // Create a table element
+                    const userTable = document.createElement('table');
+                    userTable.classList.add('user-table');
+        
+                    // Create table headers
+                    userTable.innerHTML = `
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Joined on</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    `;
+        
+                    // Reference the tbody element where user rows will be added
+                    const tbody = userTable.querySelector('tbody');
+        
+                    // Add a row for each user
+                    responseinJSON.forEach((user) => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${user.username || 'N/A'}</td>
+                            <td>${user.email || 'N/A'}</td>
+                            <td>${user.createdAt || 'N/A'}</td>
+                        `;
+                        
+                        // Append the row to the tbody
+                        tbody.appendChild(row);
+                    });
+        
+                    // Append the table to the main view in the HTML
+                    const viewApi = document.querySelector('.viewapi');
+                    viewApi.innerHTML = ''; // Clear previous content if any
+                    viewApi.appendChild(userTable);
+                }
+            };
+        
+            // Make the GET request to fetch users
+            xhttp.open('GET', '/users');
+            xhttp.send();
+        });
+        
+        
 
         loginbtn.addEventListener('click', function(){
             xhttp.onreadystatechange = function(){
