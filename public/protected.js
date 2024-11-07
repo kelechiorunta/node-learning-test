@@ -24,13 +24,14 @@
 
             xhttp.onreadystatechange = function() {
                 if (this.readyState === 4 && this.status === 200) {
+                    document.querySelector('.viewapi').innerHTML = "";
                     document.querySelector('.viewapi').innerHTML = this.responseText;
                 }
             }
 
-            xhttp.open('GET', '/profile');
+            xhttp.open('GET', '/login');
             xhttp.send();
-            
+
         })
 
         showUsersbtn.addEventListener('click', function () {

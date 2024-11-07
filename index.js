@@ -249,7 +249,6 @@ app.post('/upload', (req, res, next) => {
             next();
         });
     })
-    
 });
 
 app.get('/profile', (req, res) => {
