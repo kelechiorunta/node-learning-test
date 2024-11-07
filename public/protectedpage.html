@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protected Page</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="/public/protected.css">
+    <script type="module" defer src="/public/protected.js"></script>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <li>
+                <a href="/protectedpage">Home</a>
+            </li>
+            <li>
+                <a href="/about">About</a>
+            </li>
+            <li>
+                <a href="/contact">Contact</a>
+            </li>
+            <li>
+                <a class="logout" href="/logout">Logout</a>
+            </li>
+        </nav>
+    </header>
+    <main>
+        <nav class="sidebar">
+            <button class="showapi">Show AJAX API</button>
+            <button class="showlogin">Show AJAX API II</button>
+        </nav>
+        <section class="dashboard">
+            <h1>Welcome to the Protected Page</h1>
+            <p>Welcome <span class="name"></span></p>
+            <!-- <h2>Status: <span class="status"></span></p> -->
+            <buton class="logUser">Show SVG Design</buton>   
+                <!-- View Section -->
+            <div class="viewapi"></div>
+            <a class="lastlink" href="/logout">Logout</a>
+        </section> 
+    </main>
+</body>
+</html>
