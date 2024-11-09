@@ -1,56 +1,77 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile</title>
-    <!-- <link rel="stylesheet" href="/public/profile.css"> -->
-    <link rel="stylesheet" href="/public/style.css">
-    <link rel="stylesheet" href="/public/protected.css">
-    <script defer type="module" src="/public/protected.js"></script>
-</head>
 <body>
     <!-- Profile Page -->
     <div class="profile-container">
         <div class="profile-header">
-            <img src="/public/profile-placeholder.png" alt="Profile Picture" class="profile-picture">
-            <h2 class="username">John Doe</h2>
-            <p class="email">johndoe@example.com</p>
+            <img src="/public/imgs/avatar (1).png" alt="Profile Picture" class="profile-picture">
+            <h2 class="user_heading"></h2>
+            <p class="email_heading"></p>
         </div>
 
         <div class="profile-info">
             <h3>Personal Details</h3>
             <ul class="details-list">
-                <li><strong>Username:</strong> johndoe</li>
-                <li><strong>Email:</strong> johndoe@example.com</li>
-                <li><strong>Joined:</strong> January 1, 2023</li>
+                <li class="li_username"><strong>Username:</strong> <span class="username-value"></span></li>
+                <li class="li_email"><strong>Email:</strong> <span class="email-value"></span></li>
+                <li class="li_joined"><strong>Joined:</strong> <span class="joined-value"></span></li>
             </ul>
         </div>
 
         <!-- Profile Edit Form -->
-        <!-- <div class="profile-form">
+        <div class="profile-form">
             <h3>Edit Profile</h3>
-            <form action="/update-profile" method="POST">
+            <form action="/profile" method="POST">
                 <div class="form-group">
                     <label for="username">Username</label>
-                    <input type="text" id="username" name="username" value="johndoe" required>
+                    <input type="text" class="username" id="username" name="username" placeholder="Enter Username" required>
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" id="email" name="email" value="johndoe@example.com" required>
+                    <input type="email" class="email" id="email" name="email" placeholder="Enter Email" required>
                 </div>
                 <div class="form-group">
                     <label for="profile-picture">Profile Picture</label>
-                    <input type="file" id="profile-picture" name="profile-picture">
+                    <input type="file" class="image" id="profile-picture" name="profile-picture">
                 </div>
-                <button type="submit" class="save-btn">Save Changes</button>
+                <button type="button" class="save-btn">Save Changes</button>
             </form>
         </div>
 
         <div class="profile-actions">
             <button class="edit-profile-btn">Edit Profile</button>
             <button class="logout-btn">Logout</button>
-        </div> -->
+        </div>
     </div>
+
+    <!-- AJAX Script to Fetch User Info -->
+    <script defer type="module" text="javascript">
+
+        document.addEventListener('DOMContentLoaded', function(){
+            alert('Hello')
+        })
+        // const xhttp = new XMLHttpRequest();
+        // const viewAPI = document.querySelector('.viewapi');
+        // const usernameDisplay = viewAPI.querySelector('.username-value');
+        // const emailDisplay = viewAPI.querySelector('.email-value');
+        // const joinedDisplay = viewAPI.querySelector('.joined-value');
+
+        // xhttp.onreadystatechange = function() {
+        //     if (this.readyState === 4 && this.status === 200) {
+        //         // Parse JSON response
+        //         const user = JSON.parse(this.responseText).user;
+
+        //         // Display user info if available
+        //         if (user) {
+        //             usernameDisplay.textContent = user.username || 'N/A';
+        //             emailDisplay.textContent = user.email || 'N/A';
+        //             joinedDisplay.textContent = user.joinedAt || 'N/A'; // Assuming 'joinedAt' exists in user data
+        //         }
+        //     }
+        // };
+
+        // // Send GET request to fetch session data
+        // xhttp.open('GET', '/session');
+        // xhttp.send();
+        
+    </script>
 </body>
-</html>
+

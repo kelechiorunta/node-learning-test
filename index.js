@@ -196,17 +196,6 @@ app.post('/signup', upload.array(), async(req, res, next) => {
     }
 });
 
-  function isSessionActive(req, res, next){
-    // if (req.session.user) {
-    //     req.directPath = 'login.html'
-    //     res.sendFile(path.join(__dirname, 'public', req.directPath));
-    //     // next();
-    // }else{
-        req.directPath = 'signup.html'
-        res.sendFile(path.join(__dirname, 'public', req.directPath));
-        // next();
-    
-  }
 
 app.post('/upload', (req, res, next) => {
     // Initialize formidable with the upload directory
@@ -255,6 +244,38 @@ app.get('/profile', (req, res) => {
     const absolutePath = path.join(__dirname, '/public/profile.html');
     res.sendFile(absolutePath);
 })
+
+app.post('/profile', express.json(),  async (req, res) => {
+
+    // const data = await req.json();
+    const { username, email, image } = req.body;
+
+    // Validate the input
+    if (!username || !email || !image) {
+        return res.status(400).json({ error: "Please fill all required fields" });
+    }
+
+    try {
+        // Find the user by username
+        let user = await User.findOne({ username });
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        // Update user details
+        user.email = email;
+        user.image = image; // Assuming `image` field is defined in the User schema for storing Base64 images
+
+        await user.save();
+        res.redirect('/login')
+        // Redirect or respond with success message
+        // res.status(200).json({ message: 'Profile updated successfully' });
+    } catch (error) {
+        console.error('Profile update error:', error);
+        return res.status(500).json({ error: 'An error occurred while updating the profile' });
+    }
+});
+
 
 // Route for handling login
 app.post('/login', upload.array(), async (req, res) => {

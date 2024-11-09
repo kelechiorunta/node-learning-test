@@ -168,6 +168,14 @@ table, tr, thead, tbody, td, th {
   border-collapse: collapse;
 }
 
+.profile-container {
+  max-width: 70%;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 3rem;
+}
+
 .profile-header {
   display: flex;
   flex-direction: column;

@@ -4,19 +4,44 @@ const bcrypt = require('bcrypt');
 
 
 const UserSchema = new mongoose.Schema({
-    username: String,
-    password: String,
+    username: {
+        type: String,
+        required: true,
+        unique: true, // Ensures usernames are unique
+        trim: true
+    },
+    password: {
+        type: String,
+        required: true,
+        minlength: 6 // Set a minimum length for password security
+    },
     email: { 
         type: String,
         lowercase: true, 
-        required: true, 
-        validate: function(value){
-            return validator.isEmail(value)
-        }},
-    createdAt: Date,
-    updatedAt: Date,
-    otherUsers: Array
-})
+        required: true,
+        unique: true, // Ensures each email is unique
+        validate: {
+            validator: validator.isEmail,
+            message: 'Invalid email format'
+        }
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now // Automatically set `createdAt` on creation
+    },
+    updatedAt: {
+        type: Date,
+        default: Date.now // Automatically set `updatedAt` on creation and update
+    },
+    otherUsers: {
+        type: Array,
+        default: [] // Default to an empty array if not set
+    },
+    image: {
+        type: String,
+        default: '' // Store the image as a Base64 string or URL
+    }
+});
 // Static method to get all users
 UserSchema.statics.getUsers = function () {
     return this.find().exec(); // Using promises directly

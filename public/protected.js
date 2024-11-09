@@ -1,38 +1,187 @@
+    // protected.js
+    import '/public/profile.js';
 
-
+///To fetch users info at page load
     const xhttp = new XMLHttpRequest();
+    var username = ''; 
+    var email = '';
+    var joined = '';
+    var pic = '';
+    //Enumerable properties or ( readable and writable ) properties of the object that can be read by Object.getPropertyNames() and Object.keys();
+    var userObject = {id:0, name: 'John', email: 'john4life@gmail.com', age: 40 }
+    //Map Object
+    var myMap = new Map(Object.entries(userObject))
 
-    // Initial load of the Signup html on the dashboard
+    //Non-enumerable properties that can only be read by Object.getPropertyNames() and not Object.keys()
+    Object.defineProperty(userObject, 'reset', {
+        get : function() {
+            this.id = 0
+        }
+    })
+
+    Object.defineProperty(userObject, 'increment', {
+        get : function(){
+            this.id ++
+        }
+    })
+
+    Object.defineProperty(userObject, 'incrementByValue', {
+        get : function(){
+            this.id *= this.age
+        }
+    })
+
+    Object.defineProperty(userObject, 'setAge', {
+        set : function(value) {
+            this.age = value * this.age
+        }
+    })
+
     xhttp.onload = function(){
-        document.querySelector('.viewapi').innerHTML = this.responseText;
+        // if (this.readyState === 4 && this.status === 200) {
+            username = (JSON.parse(this.responseText))?.user?.username;
+            email = (JSON.parse(this.responseText))?.user?.email;
+            joined = (JSON.parse(this.responseText))?.user?.createdAt;
+            pic = (JSON.parse(this.responseText))?.user?.image;
+            // message[2] = JSON.parse(this.responseText).username;
+            console.log((JSON.parse(this.responseText))?.user?.username)
+            console.log(Object.entries(userObject))
+            console.log(myMap)
+
+            //Non-enumerable properties defined by getters and setters are also known as Object Accessors or Computed Properties
+            //To get the result of the getter method for the non-enumerable properties increment and incrementByValue of the userObject
+            userObject.increment;
+            userObject.incrementByValue;
+            //To apply the value fot the setter method for the non-enumerable property setAge of the userObject
+            userObject.setAge = 10
+
+            console.log(Object.getOwnPropertyDescriptors(userObject));
+            console.log(Object.entries(userObject));
+        // }
     }
-    xhttp.open('GET', '/signup');
+    xhttp.open('GET', '/session');
     xhttp.send();
+
+    const xhttps = new XMLHttpRequest();
+
+    // Initial load of the Profile html after fetching users info on the dashboard
+    xhttps.onload = function(){
+        document.querySelector('.viewapi').innerHTML = this.responseText;
+        const viewAPI = document.querySelector('.viewapi')
+        const container = viewAPI.querySelector('.profile-container');
+        const header = container.querySelector('.profile-header');
+        const profilePic = header.querySelector('.profile-picture');
+        const profileInfo = container.querySelector('.profile-info');
+        const list = profileInfo.querySelector('.details-list');
+        const span = list.querySelectorAll('span')
+            console.log(span, username)
+            span[0].textContent = username;
+            span[1].textContent = email;
+            span[2].textContent = joined;
+            profilePic.src = `data:image/png;base64,${pic}`;
+            
+    }
+    xhttps.open('GET', '/profile');
+    xhttps.send();
+
     
     
     document.addEventListener('DOMContentLoaded', async function(){
 
+        const webWorker = document.querySelector('.web_worker');
+        const startWorker = document.querySelector('.start');
+        const stopWorker = document.querySelector('.stop');
         const apibtn = document.querySelector('.showapi');
         const apibtn_II = document.querySelector('.showlogin');
         const loginbtn = document.querySelector('.logUser');
         const showUsersbtn = document.querySelector('.showUsers');
-        const editProfilebtn = document.querySelector('.editProfile');
+        const showProfilebtn = document.querySelector('.showProfile');
+        const viewAPI = document.querySelector('.viewapi');
 
-        editProfilebtn.addEventListener('click', function() {
-            
-            const xhttp =  new XMLHttpRequest();
+        let worker;
+        //Start Timer
+        startWorker.addEventListener('click', function(){
+            if (typeof(worker) == 'undefined') {
+                worker = new Worker('/public/main.js')
+                console.log(worker)
+             }
+     
+             worker.onmessage = function(event){
+                 webWorker.textContent = event.data
+             }
+        })
 
-            xhttp.onreadystatechange = function() {
-                if (this.readyState === 4 && this.status === 200) {
-                    document.querySelector('.viewapi').innerHTML = "";
-                    document.querySelector('.viewapi').innerHTML = this.responseText;
-                }
+        //Stop Timer
+        stopWorker.addEventListener('click', function(){
+            worker.terminate();
+            worker = undefined;
+        })
+
+        showProfilebtn.addEventListener('click', function() {
+
+            //Fetch User Info from backend Session
+            const xhttp = new XMLHttpRequest();
+            var username = ''; 
+            var email = '';
+            var joined = '';
+            var pic = ''
+
+            xhttp.onload = function(){
+                // if (this.readyState === 4 && this.status === 200) {
+                    username = (JSON.parse(this.responseText))?.user?.username;
+                    email = (JSON.parse(this.responseText))?.user?.email;
+                    joined = (JSON.parse(this.responseText))?.user?.createdAt;
+                    pic = (JSON.parse(this.responseText))?.user?.image;
+                    // message[2] = JSON.parse(this.responseText).username;
+                    console.log((JSON.parse(this.responseText))?.user?.image)
+                // }
             }
-
-            xhttp.open('GET', '/login');
+            xhttp.open('GET', '/session');
             xhttp.send();
 
+            ////////////////////////////////
+
+            //Display the Profile form
+
+            const xhttps = new XMLHttpRequest();
+
+            // Initial load of the Signup html on the dashboard
+            xhttps.onload = function(){
+                document.querySelector('.viewapi').innerHTML = this.responseText;
+                const viewAPI = document.querySelector('.viewapi')
+                const container = viewAPI.querySelector('.profile-container');
+                const header = container.querySelector('.profile-header');
+                const profilePic = header.querySelector('.profile-picture');
+                const profileInfo = container.querySelector('.profile-info');
+                const list = profileInfo.querySelector('.details-list');
+                const span = list.querySelectorAll('span')
+                    console.log(span, username, profilePic)
+                    span[0].textContent = username;
+                    span[1].textContent = email;
+                    span[2].textContent = joined;
+                    profilePic.src = `data:image/png;base64,${pic}`;
+                    
+            }
+            xhttps.open('GET', '/profile');
+            xhttps.send();
+
+
+            /////////////////////////
+            
+            // const xhttps =  new XMLHttpRequest();
+
+            // xhttp.onreadystatechange = function() {
+            //     if (this.readyState === 4 && this.status === 200) {
+            //         document.querySelector('.viewapi').innerHTML = "";
+            //         document.querySelector('.viewapi').innerHTML = this.responseText;
+            //     }
+            // }
+
+            // xhttp.open('GET', '/profile');
+            // xhttp.send();
+
         })
+        
 
         showUsersbtn.addEventListener('click', function () {
             const xhttp = new XMLHttpRequest();
@@ -147,21 +296,21 @@
             xhttp.send();
         })
             
-        async function getStatus (){
-            var response;
-            try{
-                response = await axios.get('/protectedpage');
-                const message = response?.data?.message;
-                console.log(response?.data)
-                document.querySelector('.status').textContent = message;
-            }
-            catch(err){
-                console.error(response?.data?.error)
-                window.href = '/login'
-            }
-        }
+        // async function getStatus (){
+        //     var response;
+        //     try{
+        //         response = await axios.get('/protectedpage');
+        //         const message = response?.data?.message;
+        //         console.log(response?.data)
+        //         document.querySelector('.status').textContent = message;
+        //     }
+        //     catch(err){
+        //         console.error(response?.data?.error)
+        //         window.href = '/login'
+        //     }
+        // }
 
-        getStatus ()
+        // getStatus ()
 
 
         async function fetchUser (){

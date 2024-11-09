@@ -9,7 +9,10 @@
     <link rel="stylesheet" href="/public/profile.css">
     <link rel="stylesheet" href="/public/protected.css">
     
+    <!-- <script type="module" defer src="/public/profile.js"></script> -->
     <script type="module" defer src="/public/protected.js"></script>
+
+    
 </head>
 
 <body>
@@ -31,14 +34,20 @@
     </header>
     <main>
         <nav class="sidebar">
+            <!-- <button class="save">Update Profile</button> -->
+            <button class="showProfile">Show Profile</button>
             <button class="showapi">Show AJAX API</button>
             <button class="showlogin">Show AJAX API II</button>
             <button class="showUsers">Show Users</button>
-            <button class="editProfile">Show Profile</button>
+            
+            
         </nav>
         <section class="dashboard">
             <h1>Welcome to the Protected Page</h1>
             <p>Welcome <span class="name"></span></p>
+            <button class="start">Start Timer</button>
+            <button class="stop">Stop Timer</button>
+            <p class="web_worker"></p>
             <!-- <h2>Status: <span class="status"></span></p> -->
             <buton class="logUser">Show SVG Design</buton>   
                 <!-- View Section -->
