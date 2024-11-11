@@ -1,6 +1,41 @@
     // protected.js
-    import '/public/profile.js';
+    // require('/public/profile.js');
 
+    function getFile(callback, usercallback) {
+        const reqObj = new  XMLHttpRequest();
+        reqObj.open('GET', 'public/profile.html');
+        reqObj.onload = function(){
+        if (this.status === 200) {
+            callback(this.responseText)
+            const reqUser = new XMLHttpRequest();
+            reqUser.open('GET', '/session');
+            reqUser.onload = function(){
+                if (this.status === 200) {
+                    usercallback(this.responseText)
+                } else {
+                    usercallback('Failed to fetch user')
+                }
+            }
+            reqUser.send();
+        } else {
+            callback("Error: " + reqObj.status)
+        }
+    }
+        reqObj.send();
+    }
+
+    getFile(display, displayUser)
+    
+    function display(file){
+        document.querySelector('.myapi').innerHTML = file
+    }
+
+    function displayUser(file){
+        document.querySelector('.myapi .profile-picture').src = `data:image/png;base64,${JSON.parse(file)?.user?.image}`;
+        document.querySelector('.myapi .username-value').innerHTML = JSON.parse(file)?.user?.username
+        document.querySelector('.myapi .email-value').innerHTML = JSON.parse(file)?.user?.email
+        document.querySelector('.myapi .joined-value').innerHTML = JSON.parse(file)?.user?.createdAt
+    }
 ///To fetch users info at page load
     const xhttp = new XMLHttpRequest();
     var username = ''; 
@@ -12,30 +47,58 @@
     //Map Object
     var myMap = new Map(Object.entries(userObject))
 
+    //Can add any number of arguments
+    function add(...n) {
+        // Arguments are the values passed in the function
+        // Arguments are properties of a function.
+        // Arguments are objects/properties of a function that contain an array of arguments.
+        // Functions, like objects, have inbuilt methods and properties
+        // n in this case represents arguments
+        // console.log(arguments) is the same as console.log(n)
+        console.log(n || arguments)
+        let i = 0;
+        for (let key in n || arguments){
+            i += n[key] || arguments[key];
+        }
+
+        return i;
+    }
+
+    function average(...n) {
+        let i = 0;
+        for (let key in n) {
+            i += n[key]
+        }
+
+        return i/n.length
+
+    }
+
+
     //Non-enumerable properties that can only be read by Object.getPropertyNames() and not Object.keys()
-    Object.defineProperty(userObject, 'reset', {
-        get : function() {
-            this.id = 0
-        }
-    })
+    // Object.defineProperty(userObject, 'reset', {
+    //     get : function() {
+    //         this.id = 0
+    //     }
+    // })
 
-    Object.defineProperty(userObject, 'increment', {
-        get : function(){
-            this.id ++
-        }
-    })
+    // Object.defineProperty(userObject, 'increment', {
+    //     get : function(){
+    //         this.id ++
+    //     }
+    // })
 
-    Object.defineProperty(userObject, 'incrementByValue', {
-        get : function(){
-            this.id *= this.age
-        }
-    })
+    // Object.defineProperty(userObject, 'incrementByValue', {
+    //     get : function(){
+    //         this.id *= this.age
+    //     }
+    // })
 
-    Object.defineProperty(userObject, 'setAge', {
-        set : function(value) {
-            this.age = value * this.age
-        }
-    })
+    // Object.defineProperty(userObject, 'setAge', {
+    //     set : function(value) {
+    //         this.age = value * this.age
+    //     }
+    // })
 
     xhttp.onload = function(){
         // if (this.readyState === 4 && this.status === 200) {
@@ -44,19 +107,22 @@
             joined = (JSON.parse(this.responseText))?.user?.createdAt;
             pic = (JSON.parse(this.responseText))?.user?.image;
             // message[2] = JSON.parse(this.responseText).username;
-            console.log((JSON.parse(this.responseText))?.user?.username)
-            console.log(Object.entries(userObject))
-            console.log(myMap)
+            console.log((JSON.parse(this.responseText))?.user?.username);
+
+            console.log(add(5,4))
+            console.log(average(9,6))
+            // console.log(Object.entries(userObject))
+            // console.log(myMap)
 
             //Non-enumerable properties defined by getters and setters are also known as Object Accessors or Computed Properties
             //To get the result of the getter method for the non-enumerable properties increment and incrementByValue of the userObject
-            userObject.increment;
-            userObject.incrementByValue;
+            // userObject.increment;
+            // userObject.incrementByValue;
             //To apply the value fot the setter method for the non-enumerable property setAge of the userObject
-            userObject.setAge = 10
+            // userObject.setAge = 10
 
-            console.log(Object.getOwnPropertyDescriptors(userObject));
-            console.log(Object.entries(userObject));
+            // console.log(Object.getOwnPropertyDescriptors(userObject));
+            // console.log(Object.entries(userObject));
         // }
     }
     xhttp.open('GET', '/session');
