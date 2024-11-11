@@ -4,7 +4,7 @@
     function getFile(callback, usercallback) {
         const reqObj = new  XMLHttpRequest();
         reqObj.open('GET', 'public/profile.html');
-        reqObj.onload = function(){
+        reqObj.onreadystatechange = function(){
         if (this.status === 200) {
             callback(this.responseText)
             const reqUser = new XMLHttpRequest();
@@ -27,128 +27,130 @@
     getFile(display, displayUser)
     
     function display(file){
-        document.querySelector('.myapi').innerHTML = file
+        document.querySelector('.viewapi').innerHTML = file
     }
 
     function displayUser(file){
-        document.querySelector('.myapi .profile-picture').src = `data:image/png;base64,${JSON.parse(file)?.user?.image}`;
-        document.querySelector('.myapi .username-value').innerHTML = JSON.parse(file)?.user?.username
-        document.querySelector('.myapi .email-value').innerHTML = JSON.parse(file)?.user?.email
-        document.querySelector('.myapi .joined-value').innerHTML = JSON.parse(file)?.user?.createdAt
+        if (document.querySelector('.viewapi')) {
+            document.querySelector('.viewapi .profile-picture').src = `data:image/png;base64,${JSON.parse(file)?.user?.image}`;
+            document.querySelector('.viewapi .username-value').innerHTML = JSON.parse(file)?.user?.username
+            document.querySelector('.viewapi .email-value').innerHTML = JSON.parse(file)?.user?.email
+            document.querySelector('.viewapi .joined-value').innerHTML = JSON.parse(file)?.user?.createdAt
+        }
     }
-///To fetch users info at page load
+// ///To fetch users info at page load
     const xhttp = new XMLHttpRequest();
-    var username = ''; 
-    var email = '';
-    var joined = '';
-    var pic = '';
-    //Enumerable properties or ( readable and writable ) properties of the object that can be read by Object.getPropertyNames() and Object.keys();
-    var userObject = {id:0, name: 'John', email: 'john4life@gmail.com', age: 40 }
-    //Map Object
-    var myMap = new Map(Object.entries(userObject))
+//     var username = ''; 
+//     var email = '';
+//     var joined = '';
+//     var pic = '';
+//     //Enumerable properties or ( readable and writable ) properties of the object that can be read by Object.getPropertyNames() and Object.keys();
+//     var userObject = {id:0, name: 'John', email: 'john4life@gmail.com', age: 40 }
+//     //Map Object
+//     var myMap = new Map(Object.entries(userObject))
 
-    //Can add any number of arguments
-    function add(...n) {
-        // Arguments are the values passed in the function
-        // Arguments are properties of a function.
-        // Arguments are objects/properties of a function that contain an array of arguments.
-        // Functions, like objects, have inbuilt methods and properties
-        // n in this case represents arguments
-        // console.log(arguments) is the same as console.log(n)
-        console.log(n || arguments)
-        let i = 0;
-        for (let key in n || arguments){
-            i += n[key] || arguments[key];
-        }
+//     //Can add any number of arguments
+//     function add(...n) {
+//         // Arguments are the values passed in the function
+//         // Arguments are properties of a function.
+//         // Arguments are objects/properties of a function that contain an array of arguments.
+//         // Functions, like objects, have inbuilt methods and properties
+//         // n in this case represents arguments
+//         // console.log(arguments) is the same as console.log(n)
+//         console.log(n || arguments)
+//         let i = 0;
+//         for (let key in n || arguments){
+//             i += n[key] || arguments[key];
+//         }
 
-        return i;
-    }
+//         return i;
+//     }
 
-    function average(...n) {
-        let i = 0;
-        for (let key in n) {
-            i += n[key]
-        }
+//     function average(...n) {
+//         let i = 0;
+//         for (let key in n) {
+//             i += n[key]
+//         }
 
-        return i/n.length
+//         return i/n.length
 
-    }
+//     }
 
 
-    //Non-enumerable properties that can only be read by Object.getPropertyNames() and not Object.keys()
-    // Object.defineProperty(userObject, 'reset', {
-    //     get : function() {
-    //         this.id = 0
-    //     }
-    // })
+//     //Non-enumerable properties that can only be read by Object.getPropertyNames() and not Object.keys()
+//     // Object.defineProperty(userObject, 'reset', {
+//     //     get : function() {
+//     //         this.id = 0
+//     //     }
+//     // })
 
-    // Object.defineProperty(userObject, 'increment', {
-    //     get : function(){
-    //         this.id ++
-    //     }
-    // })
+//     // Object.defineProperty(userObject, 'increment', {
+//     //     get : function(){
+//     //         this.id ++
+//     //     }
+//     // })
 
-    // Object.defineProperty(userObject, 'incrementByValue', {
-    //     get : function(){
-    //         this.id *= this.age
-    //     }
-    // })
+//     // Object.defineProperty(userObject, 'incrementByValue', {
+//     //     get : function(){
+//     //         this.id *= this.age
+//     //     }
+//     // })
 
-    // Object.defineProperty(userObject, 'setAge', {
-    //     set : function(value) {
-    //         this.age = value * this.age
-    //     }
-    // })
+//     // Object.defineProperty(userObject, 'setAge', {
+//     //     set : function(value) {
+//     //         this.age = value * this.age
+//     //     }
+//     // })
 
-    xhttp.onload = function(){
-        // if (this.readyState === 4 && this.status === 200) {
-            username = (JSON.parse(this.responseText))?.user?.username;
-            email = (JSON.parse(this.responseText))?.user?.email;
-            joined = (JSON.parse(this.responseText))?.user?.createdAt;
-            pic = (JSON.parse(this.responseText))?.user?.image;
-            // message[2] = JSON.parse(this.responseText).username;
-            console.log((JSON.parse(this.responseText))?.user?.username);
+//     xhttp.onload = function(){
+//         // if (this.readyState === 4 && this.status === 200) {
+//             username = (JSON.parse(this.responseText))?.user?.username;
+//             email = (JSON.parse(this.responseText))?.user?.email;
+//             joined = (JSON.parse(this.responseText))?.user?.createdAt;
+//             pic = (JSON.parse(this.responseText))?.user?.image;
+//             // message[2] = JSON.parse(this.responseText).username;
+//             console.log((JSON.parse(this.responseText))?.user?.username);
 
-            console.log(add(5,4))
-            console.log(average(9,6))
-            // console.log(Object.entries(userObject))
-            // console.log(myMap)
+//             console.log(add(5,4))
+//             console.log(average(9,6))
+//             // console.log(Object.entries(userObject))
+//             // console.log(myMap)
 
-            //Non-enumerable properties defined by getters and setters are also known as Object Accessors or Computed Properties
-            //To get the result of the getter method for the non-enumerable properties increment and incrementByValue of the userObject
-            // userObject.increment;
-            // userObject.incrementByValue;
-            //To apply the value fot the setter method for the non-enumerable property setAge of the userObject
-            // userObject.setAge = 10
+//             //Non-enumerable properties defined by getters and setters are also known as Object Accessors or Computed Properties
+//             //To get the result of the getter method for the non-enumerable properties increment and incrementByValue of the userObject
+//             // userObject.increment;
+//             // userObject.incrementByValue;
+//             //To apply the value fot the setter method for the non-enumerable property setAge of the userObject
+//             // userObject.setAge = 10
 
-            // console.log(Object.getOwnPropertyDescriptors(userObject));
-            // console.log(Object.entries(userObject));
-        // }
-    }
-    xhttp.open('GET', '/session');
-    xhttp.send();
+//             // console.log(Object.getOwnPropertyDescriptors(userObject));
+//             // console.log(Object.entries(userObject));
+//         // }
+//     }
+//     xhttp.open('GET', '/session');
+//     xhttp.send();
 
-    const xhttps = new XMLHttpRequest();
+//     const xhttps = new XMLHttpRequest();
 
-    // Initial load of the Profile html after fetching users info on the dashboard
-    xhttps.onload = function(){
-        document.querySelector('.viewapi').innerHTML = this.responseText;
-        const viewAPI = document.querySelector('.viewapi')
-        const container = viewAPI.querySelector('.profile-container');
-        const header = container.querySelector('.profile-header');
-        const profilePic = header.querySelector('.profile-picture');
-        const profileInfo = container.querySelector('.profile-info');
-        const list = profileInfo.querySelector('.details-list');
-        const span = list.querySelectorAll('span')
-            console.log(span, username)
-            span[0].textContent = username;
-            span[1].textContent = email;
-            span[2].textContent = joined;
-            profilePic.src = `data:image/png;base64,${pic}`;
+//     // Initial load of the Profile html after fetching users info on the dashboard
+//     xhttps.onload = function(){
+//         document.querySelector('.viewapi').innerHTML = this.responseText;
+//         const viewAPI = document.querySelector('.viewapi')
+//         const container = viewAPI.querySelector('.profile-container');
+//         const header = container.querySelector('.profile-header');
+//         const profilePic = header.querySelector('.profile-picture');
+//         const profileInfo = container.querySelector('.profile-info');
+//         const list = profileInfo.querySelector('.details-list');
+//         const span = list.querySelectorAll('span')
+//             console.log(span, username)
+//             span[0].textContent = username;
+//             span[1].textContent = email;
+//             span[2].textContent = joined;
+//             profilePic.src = `data:image/png;base64,${pic}`;
             
-    }
-    xhttps.open('GET', '/profile');
-    xhttps.send();
+//     }
+//     xhttps.open('GET', '/profile');
+//     xhttps.send();
 
     
     
@@ -185,53 +187,54 @@
 
         showProfilebtn.addEventListener('click', function() {
 
-            //Fetch User Info from backend Session
-            const xhttp = new XMLHttpRequest();
-            var username = ''; 
-            var email = '';
-            var joined = '';
-            var pic = ''
+            getFile(display, displayUser)
+            // //Fetch User Info from backend Session
+            // const xhttp = new XMLHttpRequest();
+            // var username = ''; 
+            // var email = '';
+            // var joined = '';
+            // var pic = ''
 
-            xhttp.onload = function(){
-                // if (this.readyState === 4 && this.status === 200) {
-                    username = (JSON.parse(this.responseText))?.user?.username;
-                    email = (JSON.parse(this.responseText))?.user?.email;
-                    joined = (JSON.parse(this.responseText))?.user?.createdAt;
-                    pic = (JSON.parse(this.responseText))?.user?.image;
-                    // message[2] = JSON.parse(this.responseText).username;
-                    console.log((JSON.parse(this.responseText))?.user?.image)
-                // }
-            }
-            xhttp.open('GET', '/session');
-            xhttp.send();
+            // xhttp.onload = function(){
+            //     // if (this.readyState === 4 && this.status === 200) {
+            //         username = (JSON.parse(this.responseText))?.user?.username;
+            //         email = (JSON.parse(this.responseText))?.user?.email;
+            //         joined = (JSON.parse(this.responseText))?.user?.createdAt;
+            //         pic = (JSON.parse(this.responseText))?.user?.image;
+            //         // message[2] = JSON.parse(this.responseText).username;
+            //         console.log((JSON.parse(this.responseText))?.user?.image)
+            //     // }
+            // }
+            // xhttp.open('GET', '/session');
+            // xhttp.send();
 
-            ////////////////////////////////
+            // ////////////////////////////////
 
-            //Display the Profile form
+            // //Display the Profile form
 
-            const xhttps = new XMLHttpRequest();
+            // const xhttps = new XMLHttpRequest();
 
-            // Initial load of the Signup html on the dashboard
-            xhttps.onload = function(){
-                document.querySelector('.viewapi').innerHTML = this.responseText;
-                const viewAPI = document.querySelector('.viewapi')
-                const container = viewAPI.querySelector('.profile-container');
-                const header = container.querySelector('.profile-header');
-                const profilePic = header.querySelector('.profile-picture');
-                const profileInfo = container.querySelector('.profile-info');
-                const list = profileInfo.querySelector('.details-list');
-                const span = list.querySelectorAll('span')
-                    console.log(span, username, profilePic)
-                    span[0].textContent = username;
-                    span[1].textContent = email;
-                    span[2].textContent = joined;
-                    profilePic.src = `data:image/png;base64,${pic}`;
+            // // Initial load of the Signup html on the dashboard
+            // xhttps.onload = function(){
+            //     document.querySelector('.viewapi').innerHTML = this.responseText;
+            //     const viewAPI = document.querySelector('.viewapi')
+            //     const container = viewAPI.querySelector('.profile-container');
+            //     const header = container.querySelector('.profile-header');
+            //     const profilePic = header.querySelector('.profile-picture');
+            //     const profileInfo = container.querySelector('.profile-info');
+            //     const list = profileInfo.querySelector('.details-list');
+            //     const span = list.querySelectorAll('span')
+            //         console.log(span, username, profilePic)
+            //         span[0].textContent = username;
+            //         span[1].textContent = email;
+            //         span[2].textContent = joined;
+            //         profilePic.src = `data:image/png;base64,${pic}`;
                     
-            }
-            xhttps.open('GET', '/profile');
-            xhttps.send();
+            // }
+            // xhttps.open('GET', '/profile');
+            // xhttps.send();
 
-
+            // SKIP THIS PART
             /////////////////////////
             
             // const xhttps =  new XMLHttpRequest();
