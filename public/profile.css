@@ -139,4 +139,9 @@
 }
 .profile-actions .logout-btn:hover {
   background-color: #c82333;
+}
+
+span {
+  text-transform: uppercase;
+  margin-left: 1em;
 }/*# sourceMappingURL=profile.css.map */

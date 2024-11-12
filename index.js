@@ -29,16 +29,32 @@ const store = MongoStore.create({
     console.log(error);
   });
 
+  var allowedOrigins = ['http://localhost:3100', 'https://node-ajax-project.vercel.app']
+
+  const corsOptions = {
+    origin: function(origin, callback){
+        if (allowedOrigins.indexOf(origin) !== -1 || !origin){
+            return callback(null, true)
+        }else{
+            return callback(new Error("Not an allowed domain"), false)
+        }
+    },
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
+    optionsSuccessStatus: 200,
+    methods: ['GET', 'POST']
+  }
+
+
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}));
 app.use('/public', express.static(path.join(__dirname, '/public')));
 app.use(session({secret: "Your secret key"}));
+app.use(cors(corsOptions))
 app.enable('trust proxy');
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
-    // rolling:true,
-    // unset: 'destroy',
     saveUninitialized: false,
     store: store,
     cookie: {

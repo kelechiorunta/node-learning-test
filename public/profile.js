@@ -1,5 +1,81 @@
     
     document.addEventListener('DOMContentLoaded', function(){
+
+        async function getFile(callback, usercallback) {
+            const reqObj = new  XMLHttpRequest();
+            reqObj.open('GET', 'public/profile.html');
+            reqObj.onreadystatechange = async function(){
+            if (this.status === 200) {
+                callback(this.responseText)
+                // Fetch session data
+                
+                try {
+                    // const apiBaseUrl = (process.env.NODE_ENV === 'production') ? 'https://node-ajax-project.vercel.app' : 'http://localhost:3100'
+                    const res = await fetch(`/session`
+                        , 
+                        {
+                        method: 'GET',
+                        credentials: 'same-origin',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                        },
+                    );
+                    if (res.ok) {
+                        const sessionData = await res.json(); // Parse JSON response
+                        console.log(sessionData)
+                        usercallback(sessionData); // Call usercallback with session data
+                    } else {
+                        usercallback('Failed to fetch user');
+                    }
+                } catch (error) {
+                    console.error("Error fetching session:", error);
+                    usercallback('Failed to fetch user');
+                }
+                
+                // .then((res)=> {return console.log(res.data)})
+                // .catch((e) => console.log(e))
+                // const reqUser = new XMLHttpRequest();
+                // reqUser.open('GET', '/session');
+                // reqUser.onload = function(){
+                //     if (this.status === 200) {
+                //         usercallback(this.responseText)
+                //     } else {
+                //         usercallback('Failed to fetch user')
+                //     }
+                // }
+                // reqUser.send();
+            } else {
+                callback("Error: " + reqObj.status)
+            }
+        }   
+            reqObj.withCredentials = true;
+            reqObj.send();
+    
+            
+        }
+    
+        getFile(display, displayUser)
+        
+        function display(file){
+            document.querySelector('.viewapi').innerHTML = file
+        }
+    
+        function displayUser(file){
+            if (file) {
+                const { user } = file
+           
+            // if (document.querySelector('.viewapi')) {
+            if (user) {
+                console.log(user)
+                document.querySelector('.profile-picture').src = `data:image/png;base64,${user?.image}`;
+                document.querySelector('.username-value').innerHTML = user?.username
+                document.querySelector('.email-value').innerHTML = user?.email
+                document.querySelector('.joined-value').innerHTML = user?.createdAt
+                }
+                // }
+        }
+        }
         
 
         // document.addEventListener('DOMContentLoaded', function(){

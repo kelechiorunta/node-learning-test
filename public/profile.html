@@ -1,3 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <!-- <link rel="stylesheet" href="/public/profile.css"> -->
+    <link rel="stylesheet" href="/public/style.css">
+    <link rel="stylesheet" href="/public/protected.css">
+    <!-- <script defer type="module" src="/public/protected.js"></script> -->
+    <script defer type="module" src="/public/profile.js"></script>
+</head>
 <body>
     <!-- Profile Page -->
     <div class="profile-container">
@@ -10,9 +22,9 @@
         <div class="profile-info">
             <h3>Personal Details</h3>
             <ul class="details-list">
-                <li class="li_username"><strong>Username:</strong> <span class="username-value"></span></li>
-                <li class="li_email"><strong>Email:</strong> <span class="email-value"></span></li>
-                <li class="li_joined"><strong>Joined:</strong> <span class="joined-value"></span></li>
+                <li class="li_username"><strong>Username:<span class="username-value"></span></strong> </li>
+                <li class="li_email"><strong>Email:<span class="email-value"></span></strong> </li>
+                <li class="li_joined"><strong>Joined:<span class="joined-value"></span></strong> </li>
             </ul>
         </div>
 
@@ -26,7 +38,7 @@
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" class="email" id="email" name="email" placeholder="Enter Email" required>
+                    <input type="email" class="email" id="email" name="email" placeholder="Enter Password" required>
                 </div>
                 <div class="form-group">
                     <label for="profile-picture">Profile Picture</label>
@@ -41,37 +53,5 @@
             <button class="logout-btn">Logout</button>
         </div>
     </div>
-
-    <!-- AJAX Script to Fetch User Info -->
-    <script defer type="module" text="javascript">
-
-        document.addEventListener('DOMContentLoaded', function(){
-            alert('Hello')
-        })
-        // const xhttp = new XMLHttpRequest();
-        // const viewAPI = document.querySelector('.viewapi');
-        // const usernameDisplay = viewAPI.querySelector('.username-value');
-        // const emailDisplay = viewAPI.querySelector('.email-value');
-        // const joinedDisplay = viewAPI.querySelector('.joined-value');
-
-        // xhttp.onreadystatechange = function() {
-        //     if (this.readyState === 4 && this.status === 200) {
-        //         // Parse JSON response
-        //         const user = JSON.parse(this.responseText).user;
-
-        //         // Display user info if available
-        //         if (user) {
-        //             usernameDisplay.textContent = user.username || 'N/A';
-        //             emailDisplay.textContent = user.email || 'N/A';
-        //             joinedDisplay.textContent = user.joinedAt || 'N/A'; // Assuming 'joinedAt' exists in user data
-        //         }
-        //     }
-        // };
-
-        // // Send GET request to fetch session data
-        // xhttp.open('GET', '/session');
-        // xhttp.send();
-        
-    </script>
 </body>
-
+</html>

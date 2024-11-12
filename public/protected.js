@@ -1,42 +1,74 @@
     // protected.js
     // require('/public/profile.js');
 
-    function getFile(callback, usercallback) {
+    async function getFile(callback, usercallback) {
         const reqObj = new  XMLHttpRequest();
         reqObj.open('GET', 'public/profile.html');
-        reqObj.onreadystatechange = function(){
+        reqObj.onload = async function(){
         if (this.status === 200) {
             callback(this.responseText)
-            const reqUser = new XMLHttpRequest();
-            reqUser.open('GET', '/session');
-            reqUser.onload = function(){
-                if (this.status === 200) {
-                    usercallback(this.responseText)
+            // Fetch session data
+            try {
+                const res = await fetch('/session'
+                    , 
+                    {
+                        method: 'GET',
+                        credentials: 'same-origin',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    },
+                );
+                if (res.ok) {
+                    const sessionData = await res.json(); // Parse JSON response
+                    console.log(sessionData)
+                    usercallback(sessionData); // Call usercallback with session data
                 } else {
-                    usercallback('Failed to fetch user')
+                    usercallback('Failed to fetch user');
                 }
+            } catch (error) {
+                console.error("Error fetching session:", error);
+                usercallback('Failed to fetch user');
             }
-            reqUser.send();
+            // .then((res)=> {return console.log(res.data)})
+            // .catch((e) => console.log(e))
+            // const reqUser = new XMLHttpRequest();
+            // reqUser.open('GET', '/session');
+            // reqUser.onload = function(){
+            //     if (this.status === 200) {
+            //         usercallback(this.responseText)
+            //     } else {
+            //         usercallback('Failed to fetch user')
+            //     }
+            // }
+            // reqUser.send();
         } else {
             callback("Error: " + reqObj.status)
         }
     }
+        reqObj.withCredentials = true;
         reqObj.send();
+
+        
     }
 
-    getFile(display, displayUser)
+    // getFile(display, displayUser)
     
     function display(file){
         document.querySelector('.viewapi').innerHTML = file
     }
 
     function displayUser(file){
+        if (file ) {
+            const { user } = file
+       
         if (document.querySelector('.viewapi')) {
-            document.querySelector('.viewapi .profile-picture').src = `data:image/png;base64,${JSON.parse(file)?.user?.image}`;
-            document.querySelector('.viewapi .username-value').innerHTML = JSON.parse(file)?.user?.username
-            document.querySelector('.viewapi .email-value').innerHTML = JSON.parse(file)?.user?.email
-            document.querySelector('.viewapi .joined-value').innerHTML = JSON.parse(file)?.user?.createdAt
+            document.querySelector('.viewapi .profile-picture').src = `data:image/png;base64,${user?.image}`;
+            document.querySelector('.viewapi .username-value').innerHTML = user?.username
+            document.querySelector('.viewapi .email-value').innerHTML = user?.email
+            document.querySelector('.viewapi .joined-value').innerHTML = user?.createdAt
         }
+    }
     }
 // ///To fetch users info at page load
     const xhttp = new XMLHttpRequest();
@@ -187,7 +219,7 @@
 
         showProfilebtn.addEventListener('click', function() {
 
-            getFile(display, displayUser)
+            getFile(display, displayUser);
             // //Fetch User Info from backend Session
             // const xhttp = new XMLHttpRequest();
             // var username = ''; 
