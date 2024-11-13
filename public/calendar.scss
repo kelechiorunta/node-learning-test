@@ -1,0 +1,190 @@
+*::after, *::before, * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.parent-calendar{
+    display: grid;
+    grid-template-columns: repeat(7, minmax(70px, 1fr));
+    grid-auto-rows: auto;
+    gap:2px;
+}
+
+span{
+    display: inline-block;
+    border:1px;
+}
+
+.parent-calendar{
+
+    padding: 2px;
+    border: 1px solid;
+    border-radius: 10px;
+
+
+    h1, ul{
+        grid-column: span 7;
+        display: flex;
+        
+        width: 100%;
+        border: 1px solid;
+    }
+
+    h1{
+        text-align: right;
+        margin: auto;
+        padding: 2px;
+        width: auto;
+    }
+
+    ul li{
+        border: 1px solid;
+        list-style-type: none;
+        min-width: 70px;
+        margin-left: 2px;
+        text-align: center;
+    }
+    ul li:first-child{
+        margin-left: 0px;
+    }
+    span{
+        text-align: center;
+        border: 1px solid;
+    }
+}
+.container-calendar{
+        display: flex;
+        align-items: flex-start;
+        // flex-direction: column;
+        // grid-template-columns: repeat(7, minmax(70px, 1fr));
+        // grid-auto-rows: auto;
+        gap:2px;
+        padding: 1rem 4px;
+        width: 610px;
+        height:100%;
+        border: 1px solid;
+        overflow-x: auto ;
+        position: relative;
+
+        &[data-direction='next'] .active{
+            animation: slideInFromRight 1s ease;
+        }
+        &[data-direction='next'] .exit {
+            animation: slideOutToLeft 1s forwards;
+        }
+        &[data-direction='prev'] .active {
+            animation: slideInFromLeft 1s forwards;
+        }
+        
+        &[data-direction='prev'] .exit {
+            animation: slideOutToRight 1s forwards;
+        }
+}
+
+.slide-btns{
+    position: absolute;
+}
+
+ul li{
+    border: 1px solid;
+    list-style-type: none;
+    min-width: 79px;
+    margin-left: 2px;
+    text-align: center;
+}
+ul li:first-child{
+    margin-left: 0px;
+}
+
+.span-wide{
+        grid-column: span 7;
+        display: flex; 
+        width: 100%;
+        min-height:50px;
+        border: 1px solid;
+}
+
+.cells{
+    // background-color: blue;
+    border: 1px solid;
+    min-height:50px;
+}
+.currentCell {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(50px, 1fr));
+    grid-auto-rows: auto;
+    gap: 2px;
+    min-width: 600px;
+    max-height:450px;
+    border: 1px solid;
+    margin: auto;
+    // margin-left: 100%;
+    padding: 1rem;
+    text-align: center;
+    // position: absolute;
+    transition: margin-left 1s ease-in-out;
+    // background-color: blue;
+}
+
+
+.slidefromright{
+    margin-left: 0;
+}
+
+.slide-btns{
+    border: 1px solid;
+    min-width: 600px;
+    display: flex;
+    justify-content: space-between;
+    padding: 2px 1rem;
+    button{font-size: 15px;}
+}
+
+
+@keyframes slideInFromRight {
+    from {
+      margin-left: 100%; /* Start from the right */
+    }
+    to {
+      margin-left: 0%; /* Move to center */
+    }
+  }
+
+  // Keyframes for slide-out to the left
+  @keyframes slideOutToLeft {
+    from {
+      margin-left: 0%; /* Start from center */
+    }
+    to {
+      margin-left: -101%; /* Slide out to the left */
+    }
+  }
+  
+  // Keyframes for slide-in from the left
+  @keyframes slideInFromLeft {
+    from {
+      margin-left: -100%; /* Start from the left */
+    }
+    to {
+      margin-left: 0%; /* Move to center */
+    }
+  }
+  
+  // Keyframes for slide-out to the right
+  @keyframes slideOutToRight {
+    from {
+      margin-left: 0%; /* Start from center */
+    }
+    to {
+      margin-left: 100%; /* Slide out to the right */
+    }
+}

@@ -29,7 +29,7 @@ const store = MongoStore.create({
     console.log(error);
   });
 
-  var allowedOrigins = ['http://localhost:3100', 'https://node-ajax-project.vercel.app']
+  var allowedOrigins = ['https://node-ajax-project.vercel.app','http://localhost:3100']
 
   const corsOptions = {
     origin: function(origin, callback){
@@ -42,16 +42,13 @@ const store = MongoStore.create({
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
     optionsSuccessStatus: 200,
-    methods: ['GET', 'POST']
+    methods: ['GET']
   }
 
-
+app.use(cors(corsOptions));
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}));
 app.use('/public', express.static(path.join(__dirname, '/public')));
-app.use(session({secret: "Your secret key"}));
-app.use(cors(corsOptions))
-app.enable('trust proxy');
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
@@ -67,6 +64,7 @@ app.use(session({
 
     }
 }));
+app.enable('trust proxy');
 // app.use(upload.array());
   //Assign the event handler to an event:
  
@@ -294,7 +292,7 @@ app.post('/profile', express.json(),  async (req, res) => {
 
 
 // Route for handling login
-app.post('/login', upload.array(), async (req, res) => {
+app.post('/login', async (req, res) => {
     const { username, password } = req.body;
 
     // Validate request body

@@ -72,6 +72,15 @@
     }
 // ///To fetch users info at page load
     const xhttp = new XMLHttpRequest();
+
+    xhttp.onload = function(){
+        if (this.status === 200){
+            document.querySelector('.myapi').innerHTML = this.responseText;
+        }
+    }
+
+    xhttp.open('GET', '/public/calendar.html');
+    xhttp.send();
 //     var username = ''; 
 //     var email = '';
 //     var joined = '';

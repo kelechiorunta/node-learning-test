@@ -10,8 +10,8 @@
                 // Fetch session data
                 
                 try {
-                    // const apiBaseUrl = (process.env.NODE_ENV === 'production') ? 'https://node-ajax-project.vercel.app' : 'http://localhost:3100'
-                    const res = await fetch(`/session`
+                    const apiBaseUrl = 'https://node-ajax-project.vercel.app';//(process.env.NODE_ENV === 'production') ? 'https://node-ajax-project.vercel.app' : 'http://localhost:3100'
+                    const res = await fetch(`${apiBaseUrl}/session`
                         , 
                         {
                         method: 'GET',
