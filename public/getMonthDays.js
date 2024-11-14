@@ -8,8 +8,6 @@ export const getFirstDayOfMonth = (monthnumber, currentyear=presentyear) => {
     return d.getDay() - 1 }; //Considering Monday as the first day of the week not Sunday
 }
 
-
-
 const getMonthDays = (monthnumber, currentyear=presentyear) => {
     switch (monthnumber){
         case 1:
@@ -44,3 +42,24 @@ const getMonthDays = (monthnumber, currentyear=presentyear) => {
 }
 
 export default getMonthDays
+
+// heading.innerHTML = `${getFirstDayOfMonth(11, 2024)}, ${getMonthDays(11)}`;
+
+    // function createCalendar(month, year, cal, wrapper){
+    //     let parent = document.querySelector('.parent-calendar');
+    //     const childcells = parent.querySelectorAll('span');
+    //     let d = 0;
+    //     childcells.forEach(cell=>cell.textContent = "");//reset the calendar
+    //     for (let n=getFirstDayOfMonth(month, year); n<=42; n+=1){
+            
+    //         if (d < getMonthDays(month, year)) {
+    //             d++;
+    //             childcells[n].textContent = d;
+    //         }
+
+            
+    //     }
+    //     console.log(cal);
+    //     document.querySelector('.slide-calendar').append(wrapper)
+        
+    // }

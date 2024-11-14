@@ -3,7 +3,7 @@
 
     async function getFile(callback, usercallback) {
         const reqObj = new  XMLHttpRequest();
-        reqObj.open('GET', 'public/profile.html');
+        reqObj.open('GET', 'public/calendar.html');
         reqObj.onload = async function(){
         if (this.status === 200) {
             callback(this.responseText)

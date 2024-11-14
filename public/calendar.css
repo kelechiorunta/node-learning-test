@@ -6,167 +6,159 @@
 
 body {
   width: 100%;
-  height: 100%;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.parent-calendar {
-  display: grid;
-  grid-template-columns: repeat(7, minmax(70px, 1fr));
-  grid-auto-rows: auto;
-  gap: 2px;
-}
-
-span {
-  display: inline-block;
-  border: 1px;
-}
-
-.parent-calendar {
-  padding: 2px;
-  border: 1px solid;
-  border-radius: 10px;
-}
-.parent-calendar h1, .parent-calendar ul {
-  grid-column: span 7;
-  display: flex;
-  width: 100%;
-  border: 1px solid;
-}
-.parent-calendar h1 {
-  text-align: right;
-  margin: auto;
-  padding: 2px;
-  width: auto;
-}
-.parent-calendar ul li {
-  border: 1px solid;
-  list-style-type: none;
-  min-width: 70px;
-  margin-left: 2px;
-  text-align: center;
-}
-.parent-calendar ul li:first-child {
-  margin-left: 0px;
-}
-.parent-calendar span {
-  text-align: center;
-  border: 1px solid;
-}
-
 .container-calendar {
   display: flex;
-  align-items: flex-start;
-  gap: 2px;
-  padding: 1rem 4px;
-  width: 610px;
-  height: 100%;
-  border: 1px solid;
-  overflow-x: auto;
-  position: relative;
-}
-.container-calendar[data-direction=next] .active {
-  animation: slideInFromRight 1s ease;
-}
-.container-calendar[data-direction=next] .exit {
-  animation: slideOutToLeft 1s forwards;
-}
-.container-calendar[data-direction=prev] .active {
-  animation: slideInFromLeft 1s forwards;
-}
-.container-calendar[data-direction=prev] .exit {
-  animation: slideOutToRight 1s forwards;
-}
-
-.slide-btns {
-  position: absolute;
-}
-
-ul li {
-  border: 1px solid;
-  list-style-type: none;
-  min-width: 79px;
-  margin-left: 2px;
-  text-align: center;
-}
-
-ul li:first-child {
-  margin-left: 0px;
-}
-
-.span-wide {
-  grid-column: span 7;
-  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   width: 100%;
-  min-height: 50px;
-  border: 1px solid;
+  margin: auto;
+  min-height: 500px;
+  max-width: 600px;
+  overflow: hidden;
+  position: relative;
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-
-.cells {
-  border: 1px solid;
-  min-height: 50px;
+.container-calendar[data-direction=next] .currentCell.active {
+  animation: slideInLeft 0.3s forwards;
+}
+.container-calendar[data-direction=next] .currentCell.exit {
+  animation: slideOutLeft 0.3s forwards;
+}
+.container-calendar[data-direction=prev] .currentCell.active {
+  animation: slideInRight 0.3s forwards;
+}
+.container-calendar[data-direction=prev] .currentCell.exit {
+  animation: slideOutRight 0.3s forwards;
 }
 
 .currentCell {
   display: grid;
-  grid-template-columns: repeat(7, minmax(50px, 1fr));
-  grid-auto-rows: auto;
-  gap: 2px;
-  min-width: 600px;
-  max-height: 450px;
-  border: 1px solid;
-  margin: auto;
-  padding: 1rem;
-  text-align: center;
-  transition: margin-left 1s ease-in-out;
+  grid-template-columns: repeat(7, minmax(1fr, 1fr));
+  gap: 5px;
+  padding: 20px;
+  opacity: 1;
+  width: 100%;
+  min-height: 500px;
+  max-width: 600px;
+  position: absolute;
+  top: 0;
+  flex-shrink: 0;
+  transform: translateX(0%);
+  transition: transform 0.3s ease-in-out;
 }
-
-.slidefromright {
-  margin-left: 0;
+.currentCell h1,
+.currentCell .span-wide {
+  grid-column: span 7;
+  text-align: center;
+  font-weight: bold;
+  color: #4a90e2;
+}
+.currentCell h1 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+.currentCell ul {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #333333;
+}
+.currentCell span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 0;
+  font-size: 0.8rem;
+  color: #333333;
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+  border-radius: 5px;
+  width: 100%;
+  transition: background-color 0.3s;
+}
+.currentCell span.cells:hover {
+  background-color: #2275d7;
+  color: #ffffff;
 }
 
 .slide-btns {
-  border: 1px solid;
-  min-width: 600px;
   display: flex;
   justify-content: space-between;
-  padding: 2px 1rem;
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+  position: absolute;
+  padding: 1rem;
+  z-index: 20;
+  top: 0;
 }
 .slide-btns button {
-  font-size: 15px;
+  background-color: #4a90e2;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.slide-btns button:hover {
+  background-color: #2275d7;
 }
 
-@keyframes slideInFromRight {
+@keyframes slideInLeft {
   from {
-    margin-left: 100%; /* Start from the right */
+    transform: translateX(100%);
+    opacity: 1;
   }
   to {
-    margin-left: 0%; /* Move to center */
+    transform: translateX(0%);
+    opacity: 1;
   }
 }
-@keyframes slideOutToLeft {
+@keyframes slideOutLeft {
   from {
-    margin-left: 0%; /* Start from center */
+    transform: translateX(0%);
+    opacity: 1;
+    display: grid;
   }
   to {
-    margin-left: -101%; /* Slide out to the left */
+    transform: translateX(-100%);
+    opacity: 1;
+    display: none;
   }
 }
-@keyframes slideInFromLeft {
+@keyframes slideInRight {
   from {
-    margin-left: -100%; /* Start from the left */
+    transform: translateX(-100%);
+    opacity: 1;
   }
   to {
-    margin-left: 0%; /* Move to center */
+    transform: translateX(0);
+    opacity: 1;
   }
 }
-@keyframes slideOutToRight {
+@keyframes slideOutRight {
   from {
-    margin-left: 0%; /* Start from center */
+    transform: translateX(0);
+    opacity: 1;
+    display: grid;
   }
   to {
-    margin-left: 100%; /* Slide out to the right */
+    transform: translateX(100%);
+    opacity: 1;
+    display: none;
   }
 }/*# sourceMappingURL=calendar.css.map */

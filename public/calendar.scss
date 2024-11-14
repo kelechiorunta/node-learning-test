@@ -6,185 +6,418 @@
 
 body{
     width: 100%;
-    height: 100%;
+    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.parent-calendar{
-    display: grid;
-    grid-template-columns: repeat(7, minmax(70px, 1fr));
-    grid-auto-rows: auto;
-    gap:2px;
-}
+// .parent-calendar{
+//     display: grid;
+//     grid-template-columns: repeat(7, minmax(70px, 1fr));
+//     grid-auto-rows: auto;
+//     gap:2px;
+// }
 
-span{
-    display: inline-block;
-    border:1px;
-}
+// span{
+//     display: inline-block;
+//     border:1px;
+// }
 
-.parent-calendar{
+// .parent-calendar{
 
-    padding: 2px;
-    border: 1px solid;
-    border-radius: 10px;
+//     padding: 2px;
+//     border: 1px solid;
+//     border-radius: 10px;
 
 
-    h1, ul{
-        grid-column: span 7;
-        display: flex;
+//     h1, ul{
+//         grid-column: span 7;
+//         display: flex;
         
-        width: 100%;
-        border: 1px solid;
-    }
+//         width: 100%;
+//         border: 1px solid;
+//     }
 
-    h1{
-        text-align: right;
-        margin: auto;
-        padding: 2px;
-        width: auto;
-    }
+//     h1{
+//         text-align: right;
+//         margin: auto;
+//         padding: 2px;
+//         width: auto;
+//     }
 
-    ul li{
-        border: 1px solid;
-        list-style-type: none;
-        min-width: 70px;
-        margin-left: 2px;
-        text-align: center;
-    }
-    ul li:first-child{
-        margin-left: 0px;
-    }
-    span{
-        text-align: center;
-        border: 1px solid;
-    }
-}
-.container-calendar{
-        display: flex;
-        align-items: flex-start;
-        // flex-direction: column;
-        // grid-template-columns: repeat(7, minmax(70px, 1fr));
-        // grid-auto-rows: auto;
-        gap:2px;
-        padding: 1rem 4px;
-        width: 610px;
-        height:100%;
-        border: 1px solid;
-        overflow-x: auto ;
-        position: relative;
+//     ul li{
+//         border: 1px solid;
+//         list-style-type: none;
+//         min-width: 70px;
+//         margin-left: 2px;
+//         text-align: center;
+//     }
+//     ul li:first-child{
+//         margin-left: 0px;
+//     }
+//     span{
+//         text-align: center;
+//         border: 1px solid;
+//     }
+// }
+// .container-calendar{
+//         display: flex;
+//         align-items: flex-start;
+//         // flex-direction: column;
+//         // grid-template-columns: repeat(7, minmax(70px, 1fr));
+//         // grid-auto-rows: auto;
+//         gap:2px;
+//         padding: 1rem 4px;
+//         width: 610px;
+//         height:100%;
+//         border: 1px solid;
+//         overflow-x: auto ;
+//         position: relative;
 
-        &[data-direction='next'] .active{
-            animation: slideInFromRight 1s ease;
-        }
-        &[data-direction='next'] .exit {
-            animation: slideOutToLeft 1s forwards;
-        }
-        &[data-direction='prev'] .active {
-            animation: slideInFromLeft 1s forwards;
-        }
+//         &[data-direction='next'] .active{
+//             animation: slideInFromRight 1s ease;
+//         }
+//         &[data-direction='next'] .exit {
+//             animation: slideOutToLeft 1s forwards;
+//         }
+//         &[data-direction='prev'] .active {
+//             animation: slideInFromLeft 1s forwards;
+//         }
         
-        &[data-direction='prev'] .exit {
-            animation: slideOutToRight 1s forwards;
-        }
-}
+//         &[data-direction='prev'] .exit {
+//             animation: slideOutToRight 1s forwards;
+//         }
+// }
 
-.slide-btns{
-    position: absolute;
-}
+// .slide-btns{
+//     position: absolute;
+// }
 
-ul li{
-    border: 1px solid;
-    list-style-type: none;
-    min-width: 79px;
-    margin-left: 2px;
-    text-align: center;
-}
-ul li:first-child{
-    margin-left: 0px;
-}
+// ul li{
+//     border: 1px solid;
+//     list-style-type: none;
+//     min-width: 79px;
+//     margin-left: 2px;
+//     text-align: center;
+// }
+// ul li:first-child{
+//     margin-left: 0px;
+// }
 
-.span-wide{
-        grid-column: span 7;
-        display: flex; 
-        width: 100%;
-        min-height:50px;
-        border: 1px solid;
-}
+// .span-wide{
+//         grid-column: span 7;
+//         display: flex; 
+//         width: 100%;
+//         min-height:50px;
+//         border: 1px solid;
+// }
 
-.cells{
-    // background-color: blue;
-    border: 1px solid;
-    min-height:50px;
-}
-.currentCell {
-    display: grid;
-    grid-template-columns: repeat(7, minmax(50px, 1fr));
-    grid-auto-rows: auto;
-    gap: 2px;
-    min-width: 600px;
-    max-height:450px;
-    border: 1px solid;
-    margin: auto;
-    // margin-left: 100%;
-    padding: 1rem;
-    text-align: center;
-    // position: absolute;
-    transition: margin-left 1s ease-in-out;
-    // background-color: blue;
-}
+// .cells{
+//     // background-color: blue;
+//     border: 1px solid;
+//     min-height:50px;
+// }
+// .currentCell {
+//     display: grid;
+//     grid-template-columns: repeat(7, minmax(50px, 1fr));
+//     grid-auto-rows: auto;
+//     gap: 2px;
+//     min-width: 600px;
+//     max-height:450px;
+//     border: 1px solid;
+//     margin: auto;
+//     // margin-left: 100%;
+//     padding: 1rem;
+//     text-align: center;
+//     // position: absolute;
+//     transition: margin-left 1s ease-in-out;
+//     // background-color: blue;
+// }
 
 
-.slidefromright{
-    margin-left: 0;
-}
+// .slidefromright{
+//     margin-left: 0;
+// }
 
-.slide-btns{
-    border: 1px solid;
-    min-width: 600px;
+// .slide-btns{
+//     border: 1px solid;
+//     min-width: 600px;
+//     display: flex;
+//     justify-content: space-between;
+//     padding: 2px 1rem;
+//     button{font-size: 15px;}
+// }
+
+
+// @keyframes slideInFromRight {
+//     from {
+//       margin-left: 100%; /* Start from the right */
+//     }
+//     to {
+//       margin-left: 0%; /* Move to center */
+//     }
+//   }
+
+//   // Keyframes for slide-out to the left
+//   @keyframes slideOutToLeft {
+//     from {
+//       margin-left: 0%; /* Start from center */
+//     }
+//     to {
+//       margin-left: -101%; /* Slide out to the left */
+//     }
+//   }
+  
+//   // Keyframes for slide-in from the left
+//   @keyframes slideInFromLeft {
+//     from {
+//       margin-left: -100%; /* Start from the left */
+//     }
+//     to {
+//       margin-left: 0%; /* Move to center */
+//     }
+//   }
+  
+//   // Keyframes for slide-out to the right
+//   @keyframes slideOutToRight {
+//     from {
+//       margin-left: 0%; /* Start from center */
+//     }
+//     to {
+//       margin-left: 100%; /* Slide out to the right */
+//     }
+// }
+
+// Define colors and animations
+$primary-color: #4a90e2;
+$accent-color: #f5a623;
+$bg-color: #ffffff;
+$border-color: #dddddd;
+$text-color: #333333;
+$hover-color: darken($primary-color, 10%);
+$transition-duration: 0.3s;
+
+// // Calendar container
+// .container-calendar {
+//   display: flex;
+//   justify-content: center;
+//   align-items: flex-start;
+//   flex-direction: row;
+//   position: relative;
+//   overflow: hidden;
+// //   width: 100%;
+//   max-width: 300px;
+//   max-height: 500px;
+// //   min-width: 600px;
+//   background-color: $bg-color;
+//   border-radius: 10px;
+//   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  
+//   &[data-direction="next"] .currentCell {
+//     &.next { animation: slideInLeft $transition-duration forwards; }
+//     &.exit { animation: slideOutLeft $transition-duration forwards; }
+//   }
+
+//   &[data-direction="prev"] .currentCell {
+//     &.prev { animation: slideInRight $transition-duration forwards; }
+//     &.exit { animation: slideOutRight $transition-duration forwards; }
+//   }
+// }
+
+// // Calendar cells
+// .currentCell {
+//   display: grid;
+//  grid-template-columns: repeat(7, minmax(1fr, 1fr));
+//   gap: 5px;
+//   padding: 20px;
+//   opacity: 1;
+//   width: 100%;
+//   margin: auto;
+//   max-width: 600px;
+//   margin-left: 0%;
+//   flex: 1 1 1;
+//   border: 1px solid;
+    
+//   transition: margin-left opacity $transition-duration ease-in-out;
+
+//   &.active { opacity: 1; }
+  
+//   // Month heading and days of the week
+//   h1, .span-wide {
+//     grid-column: span 7;
+//     text-align: center;
+//     font-weight: bold;
+//     color: $primary-color;
+//   }
+  
+//   h1 { font-size: 1.5rem; margin-bottom: 10px; }
+  
+//   ul { 
+//     display: flex;
+//     width: 100%;
+//     justify-content: space-around;
+//     font-size: 0.9rem;
+//     font-weight: 600;
+//     color: $text-color;
+//   }
+  
+//   span {
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     padding: 8px 0;
+//     font-size: 0.8rem;
+//     color: $text-color;
+//     background-color: $bg-color;
+//     border: 1px solid $border-color;
+    
+//     width: 100%;
+//     border-radius: 5px;
+//     transition: background-color $transition-duration;
+
+//     &.cells:hover { background-color: $hover-color; color: $bg-color; }
+//   }
+// }
+
+.container-calendar {
     display: flex;
-    justify-content: space-between;
-    padding: 2px 1rem;
-    button{font-size: 15px;}
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: auto;
+    min-height: 500px;
+    max-width: 600px;
+    overflow: hidden; // Hide content outside view
+    position: relative;
+    border-radius: 10px;
+    background-color: $bg-color;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  
+    &[data-direction="next"] .currentCell {
+      &.active { animation: slideInLeft $transition-duration forwards; }
+      &.exit { animation: slideOutLeft $transition-duration forwards; }
+    }
+    
+    &[data-direction="prev"] .currentCell {
+      &.active { animation: slideInRight $transition-duration forwards;  }
+      &.exit { animation: slideOutRight $transition-duration forwards; }
+    }
+  }
+  
+  .currentCell {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(1fr, 1fr));
+    gap: 5px;
+    padding: 20px;
+    opacity: 1;
+    width: 100%; 
+    min-height: 500px;
+    max-width: 600px;
+    position: absolute;
+    top: 0;
+    // left: -100%;
+    flex-shrink: 0;
+    transform: translateX(0%);
+    transition: transform $transition-duration ease-in-out;
+     // Default position in the viewport
+    // .prev{transform: translateX(-100%);}
+    // .next{transform: translateX(0);}
+    // Other styling remains the same...
+  
+  
+    // Month heading and days of the week styling
+    h1,
+    .span-wide {
+      grid-column: span 7;
+      text-align: center;
+      font-weight: bold;
+      color: $primary-color;
+    }
+  
+    h1 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+  
+    ul {
+      display: flex;
+      width: 100%;
+      justify-content: space-around;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: $text-color;
+    }
+  
+    // Day cell styling
+    span {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 8px 0;
+      font-size: 0.8rem;
+      color: $text-color;
+      background-color: $bg-color;
+      border: 1px solid $border-color;
+      border-radius: 5px;
+      width: 100%;
+      transition: background-color $transition-duration;
+  
+      &.cells:hover {
+        background-color: $hover-color;
+        color: $bg-color;
+      }
+    }
+  }
+  
+
+// Slide buttons
+.slide-btns {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+  position: absolute;
+  padding: 1rem;
+  z-index: 20;
+  top: 0;
+
+  button {
+    background-color: $primary-color;
+    color: $bg-color;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color $transition-duration;
+
+    &:hover {
+      background-color: $hover-color;
+    }
+  }
 }
 
+// Animations
+@keyframes slideInLeft {
+  from { transform: translateX(100%); opacity: 1; }
+  to { transform: translateX(0%); opacity: 1; }
+}
 
-@keyframes slideInFromRight {
-    from {
-      margin-left: 100%; /* Start from the right */
-    }
-    to {
-      margin-left: 0%; /* Move to center */
-    }
-  }
+@keyframes slideOutLeft {
+  from { transform: translateX(0%); opacity: 1; display: grid; }
+  to { transform: translateX(-100%); opacity: 1; display: none;}
+}
 
-  // Keyframes for slide-out to the left
-  @keyframes slideOutToLeft {
-    from {
-      margin-left: 0%; /* Start from center */
-    }
-    to {
-      margin-left: -101%; /* Slide out to the left */
-    }
-  }
-  
-  // Keyframes for slide-in from the left
-  @keyframes slideInFromLeft {
-    from {
-      margin-left: -100%; /* Start from the left */
-    }
-    to {
-      margin-left: 0%; /* Move to center */
-    }
-  }
-  
-  // Keyframes for slide-out to the right
-  @keyframes slideOutToRight {
-    from {
-      margin-left: 0%; /* Start from center */
-    }
-    to {
-      margin-left: 100%; /* Slide out to the right */
-    }
+@keyframes slideInRight {
+  from {  transform: translateX(-100%); opacity: 1; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideOutRight {
+  from { transform: translateX(0); opacity: 1; display: grid;}
+  to {  transform: translateX(100%); opacity: 1; display: none; }
 }
