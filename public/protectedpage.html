@@ -58,5 +58,30 @@
             <a class="lastlink" href="/logout">Logout</a>
         </section> 
     </main>
+    <div id="user-info"></div>
+
+    <script>
+
+        async function getUser(){
+            try{
+                const response = await axios.get('/session', {withCredentials: true});
+                const data = response.data.user;
+                console.log(data)
+                document.getElementById('user-info').textContent = `User: ${data.username}`
+
+            }catch(err){
+                console.error(err)
+            }
+        }
+
+        getUser();
+        
+        // fetch('/session')
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         document.getElementById('user-info').textContent = `User: ${data.user.name}`;
+        //     })
+        //     .catch(error => console.error('Error fetching user data:', error));
+    </script>
 </body>
 </html>

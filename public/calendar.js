@@ -253,10 +253,10 @@
 //     showSlide(activeIndex, 'next');
 // });
 
-import { getFirstDayOfMonth } from './getMonthDays.js';
+import { getFirstDayOfMonth, getMonthname } from './getMonthDays.js';
 import getMonthDays from './getMonthDays.js';
 
-let currentMonth = 1; // Starts with January
+let currentMonth = 11; // Starts with January
 let activeIndex = 0; // Tracks the current active slide
 let currentYear = 2024; // Tracks the current year
 
@@ -267,18 +267,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const backBtn = document.querySelector('.back');
 
     // Helper function to create a calendar view
-    function createCalendar(month, year, container, animatedClass, calendar) {
+    function createCalendar(month, year, animatedClass, wrapper, container) {
         const displayMonth = month === 0 ? 1 : month; // Display January as "1" and December as "12"
         const displayYear = year;
-        const wrapper = document.createElement('div');
+        // const wrapper = document.createElement('div');
         wrapper.className = `currentCell ${animatedClass}`;
-        wrapper.classList.add(`cell${displayMonth}`);
+        wrapper.classList.add(`cell${displayMonth}-${year}`);
 
         const ul = document.createElement('ul');
         const h1 = document.createElement('h1');
         ul.className = 'span-wide';
         h1.className = 'span-wide';
-        h1.textContent = `${displayMonth}, ${displayYear}`;
+        h1.textContent = `${getMonthname(displayMonth)}, ${displayYear}`;
 
         daysWeek.forEach(day => {
             const li = document.createElement('li');
@@ -304,22 +304,51 @@ document.addEventListener('DOMContentLoaded', () => {
             span.textContent = index >= firstDayIndex && index - firstDayIndex < daysInMonth ? index - firstDayIndex + 1 : "";
         });
 
-        console.log(calendar)
+        // console.log(calendar)
     }
 
     // Calendar structure class to manage individual calendar cells
     class CalendarStructure {
-        constructor(month, year, animatedClass) {
+        constructor(month, year, animatedClass, wrapper, container) {
             this.month = month;
             this.year = year;
             this.animatedClass = animatedClass;
+            this.wrapper = wrapper
+            this.container = container;
             this.initializeCalendar = this.initializeCalendar.bind(this);
+
+            // Fire a custom event when the div is created
+            const event = new CustomEvent('divCreated', {
+                detail: { div: this.wrapper } // Attach the div to the event's details
+            });
+            this.container.dispatchEvent(event);
+
+            // this.container.addEventListener('divCreated', function(e){
+            //     // console.log('A new div was created:', e.detail.div)
+            //     console.log('A new div was created:', e.detail.div);
+            // })
         }
 
-        initializeCalendar(container) {
-                createCalendar(this.month, this.year, container, this.animatedClass);
-            }
+        initializeCalendar() {
             
+            
+             createCalendar(this.month, this.year, this.animatedClass, this.wrapper, this.container);
+            
+
+            console.log(this.wrapper)
+            // if (this.wrapper){
+            //     createCalendar(this.month, this.year, this.animatedClass, this.wrapper, this.container);           
+            // }
+        }
+        get isActive() {
+            return this.animatedClass;
+        }
+        set animateClass(x){
+            return this.animatedClass = x;
+        }
+        set changeMonth(x){
+            return this.month = x;
+        }
     }
 
     // Function to update the active slide with animations
@@ -328,13 +357,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const slides = document.querySelectorAll('.currentCell');
 
         slides.forEach((slide, i) => {
-            slide.classList.remove('active', 'exit');
             if (i === index) {
                 slide.classList.add('active');
                 slide.classList.remove('exit');
             } else {
+                
                 slide.classList.remove('active');
                 slide.classList.add('exit');
+                // slideContainer.removeChild(slide)
             }
         });
 
@@ -352,8 +382,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 currentYear++;
             }
 
-            const newCalendar = new CalendarStructure(currentMonth, currentYear, 'next');
-            newCalendar.initializeCalendar(slideContainer);
+            // slideContainer.addEventListener('divCreated', function(e){
+            //     // Check if the slideContainer contains e.detail.div
+            //     if (Array.from(slideContainer.children).includes(e.detail.div)) {
+            //      slideContainer.removeChild(e.detail.div);
+            //  }
+             
+            //      console.log('A new div was created:', e.detail.div);
+            //  })
+
+            const wrapper = document.createElement('div');
+            const newCalendar = new CalendarStructure(currentMonth, currentYear, 'next', wrapper, slideContainer);
+            newCalendar.initializeCalendar();
+            
         }
 
         activeIndex++
@@ -363,28 +404,42 @@ document.addEventListener('DOMContentLoaded', () => {
     // Function to handle back button click
     function handleBackSlide() {
         // const activeSlide = document.querySelector(`.cell${activeIndex + 1}`);
-        //  if (!activeSlide ) { // If on the first slide, add a new previous month
-             currentMonth--;
-            if (currentMonth < 1) { // Go to December of the previous year
+        if (activeIndex === 0 ) { // If on the first slide, add a new previous month
+            // return
+            currentMonth--;
+            if (currentMonth <= 1) { // Go to December of the previous year
+                // return 
                 currentMonth = 12;
                 currentYear--;
+                // activeIndex = 0
                 // activeIndex--
             }
             // else {
-            //     currentMonth--;
-            //     // activeIndex--
-            // }
+            //      currentMonth--;
+            // //     // activeIndex--
+            //  }
 
-            const newCalendar = new CalendarStructure(currentMonth, currentYear, 'prev');
-            newCalendar.initializeCalendar(slideContainer);
+            // slideContainer.addEventListener('divCreated', function(e){
+            //     // Check if the slideContainer contains e.detail.div
+            //     if (Array.from(slideContainer.children).includes(e.detail.div)) {
+            //      slideContainer.removeChild(e.detail.div);
+            //  }
+             
+            //      console.log('A new div was created:', e.detail.div);
+            //  })
+
+            const wrapper = document.createElement('div');
+            const newCalendar = new CalendarStructure(currentMonth, currentYear, 'prev', wrapper, slideContainer);
+            newCalendar.initializeCalendar();
+            console.log(newCalendar.isActive)
 
             // Recalculate activeIndex to reflect the newly added previous month
             // activeIndex = 0;
-        // } 
+        } 
         //  else {
-            activeIndex++//= (activeIndex + 1) % slides.length;
-        //  }
-        showSlide(activeIndex, 'prev');
+            activeIndex--//= (activeIndex + 1) % slides.length;
+    //   }
+        showSlide(Math.abs(activeIndex), 'prev');
     }
 
     // Button event listeners
@@ -392,8 +447,9 @@ document.addEventListener('DOMContentLoaded', () => {
     backBtn.addEventListener('click', handleBackSlide);
 
     // Initial setup
-    const initialCalendar = new CalendarStructure(currentMonth, currentYear, '');
-    initialCalendar.initializeCalendar(slideContainer);
+    const wrapper = document.createElement('div');
+    const initialCalendar = new CalendarStructure(currentMonth, currentYear, '', wrapper, slideContainer);
+    initialCalendar.initializeCalendar();
     showSlide(activeIndex, '');
 });
 

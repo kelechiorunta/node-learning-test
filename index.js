@@ -16,6 +16,7 @@ const MongoStore = require('connect-mongo');
 require('dotenv').config();
 const app = express();
 
+//Connect to the Mongo DB
 connectDB();
 
 const store = MongoStore.create({
@@ -367,7 +368,7 @@ function checksignin(req, res, next){
 
 
 app.get('/protectedpage', checksignin, function(req, res){
-    res.sendFile(path.join(__dirname, 'public', 'protectedpage.html'));
+    res.sendFile(path.join(__dirname, 'public', 'protectedpage.html'))
 })
 
 app.get('/session', checksignin, (req, res) => {

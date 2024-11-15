@@ -27,6 +27,9 @@ body {
   background-color: #ffffff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+.container-calendar[data-direction=""] .currentCell {
+  animation: initial 0.3s forwards;
+}
 .container-calendar[data-direction=next] .currentCell.active {
   animation: slideInLeft 0.3s forwards;
 }
@@ -66,6 +69,9 @@ body {
   font-size: 1.5rem;
   margin-bottom: 10px;
 }
+.currentCell li {
+  list-style-type: none;
+}
 .currentCell ul {
   display: flex;
   width: 100%;
@@ -87,7 +93,8 @@ body {
   width: 100%;
   transition: background-color 0.3s;
 }
-.currentCell span.cells:hover {
+.currentCell span:hover {
+  cursor: pointer;
   background-color: #2275d7;
   color: #ffffff;
 }
@@ -160,5 +167,17 @@ body {
     transform: translateX(100%);
     opacity: 1;
     display: none;
+  }
+}
+@keyframes initial {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+    display: grid;
+  }
+  to {
+    transform: translateX(0%);
+    opacity: 1;
+    display: grid;
   }
 }/*# sourceMappingURL=calendar.css.map */

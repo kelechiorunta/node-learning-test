@@ -294,6 +294,11 @@ $transition-duration: 0.3s;
     border-radius: 10px;
     background-color: $bg-color;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+    &[data-direction=""] .currentCell {
+      &{ animation: initial $transition-duration forwards; }
+      
+    }
   
     &[data-direction="next"] .currentCell {
       &.active { animation: slideInLeft $transition-duration forwards; }
@@ -340,6 +345,9 @@ $transition-duration: 0.3s;
       font-size: 1.5rem;
       margin-bottom: 10px;
     }
+    li{
+      list-style-type: none;
+    }
   
     ul {
       display: flex;
@@ -364,7 +372,8 @@ $transition-duration: 0.3s;
       width: 100%;
       transition: background-color $transition-duration;
   
-      &.cells:hover {
+      &:hover {
+        cursor: pointer;
         background-color: $hover-color;
         color: $bg-color;
       }
@@ -420,4 +429,9 @@ $transition-duration: 0.3s;
 @keyframes slideOutRight {
   from { transform: translateX(0); opacity: 1; display: grid;}
   to {  transform: translateX(100%); opacity: 1; display: none; }
+}
+
+@keyframes initial {
+  from { transform: translateX(0); opacity: 1; display: grid;}
+  to {  transform: translateX(0%); opacity: 1; display: grid; }
 }
