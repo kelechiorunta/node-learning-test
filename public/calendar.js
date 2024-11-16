@@ -253,10 +253,230 @@
 //     showSlide(activeIndex, 'next');
 // });
 
+// import { getFirstDayOfMonth, getMonthname } from './getMonthDays.js';
+// import getMonthDays from './getMonthDays.js';
+
+// let currentMonth = 11; // Starts with January
+// let activeIndex = 0; // Tracks the current active slide
+// let currentYear = 2024; // Tracks the current year
+
+// document.addEventListener('DOMContentLoaded', () => {
+//     const daysWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+//     const slideContainer = document.querySelector('.container-calendar');
+//     const forwardBtn = document.querySelector('.foward');
+//     const backBtn = document.querySelector('.back');
+//     const slideSet = new Set();
+
+//     // Helper function to create a calendar view
+//     function createCalendar(month, year, animatedClass, wrapper, container) {
+//         const displayMonth = month === 0 ? 1 : month; // Display January as "1" and December as "12"
+//         const displayYear = year;
+//         // const wrapper = document.createElement('div');
+//         wrapper.className = `currentCell ${animatedClass}`;
+//         wrapper.classList.add(`cell${displayMonth}-${year}`);
+
+//         const ul = document.createElement('ul');
+//         const h1 = document.createElement('h1');
+//         ul.className = 'span-wide';
+//         h1.className = 'span-wide';
+//         h1.textContent = `${getMonthname(displayMonth)}, ${displayYear}`;
+
+//         daysWeek.forEach(day => {
+//             const li = document.createElement('li');
+//             li.textContent = day;
+//             ul.append(li);
+//         });
+
+//         wrapper.append(h1);
+//         wrapper.append(ul);
+
+//         // Append day elements to the wrapper
+//         for (let i = 0; i < 42; i++) {
+//             const span = document.createElement('span');
+//             wrapper.append(span);
+//         }
+
+//         if (!wrapper.classList.contains(`${displayMonth}-${displayYear}`)){
+//             slideSet.add(wrapper);
+//             container.append(wrapper);
+//         }
+       
+        
+
+//         const firstDayIndex = getFirstDayOfMonth(displayMonth, displayYear);
+//         const daysInMonth = getMonthDays(displayMonth, displayYear);
+//         const spans = wrapper.querySelectorAll('span');
+//         spans.forEach((span, index) => {
+//             span.textContent = index >= firstDayIndex && index - firstDayIndex < daysInMonth ? index - firstDayIndex + 1 : "";
+//         });
+
+//         // console.log(calendar)
+//     }
+
+//     // Calendar structure class to manage individual calendar cells
+//     class CalendarStructure {
+//         constructor(month, year, animatedClass, wrapper, container) {
+//             this.month = month;
+//             this.year = year;
+//             this.animatedClass = animatedClass;
+//             this.wrapper = wrapper
+//             this.container = container;
+//             this.initializeCalendar = this.initializeCalendar.bind(this);
+
+//             // Fire a custom event when the div is created
+//             const event = new CustomEvent('divCreated', {
+//                 detail: { div: this.wrapper } // Attach the div to the event's details
+//             });
+//             this.container.dispatchEvent(event);
+
+//             // this.container.addEventListener('divCreated', function(e){
+//             //     // console.log('A new div was created:', e.detail.div)
+//             //     console.log('A new div was created:', e.detail.div);
+//             // })
+//         }
+
+//         initializeCalendar() {
+            
+//              createCalendar(this.month, this.year, this.animatedClass, this.wrapper, this.container);
+            
+//             console.log(this.wrapper)
+//             // if (this.wrapper){
+//             //     createCalendar(this.month, this.year, this.animatedClass, this.wrapper, this.container);           
+//             // }
+//         }
+//         get isActive() {
+//             return this.animatedClass;
+//         }
+//         set animateClass(x){
+//             return this.animatedClass = x;
+//         }
+//         set changeMonth(x){
+//             return this.month = x;
+//         }
+//     }
+
+//     // Function to update the active slide with animations
+//     function showSlide(index, direction='next') {
+//         slideContainer.setAttribute('data-direction', direction);
+//         const slides = document.querySelectorAll('.currentCell');
+//         if (index < 0) {
+//             index = Math.abs(index)
+//         }
+//         slideSet.keys().forEach((slide, i) => {
+//             // slide.classList.remove('active', 'exit', 'prev', 'next')
+//             if (i === index) {
+//                 slide.classList.add('active');
+//                 slide.classList.remove('exit');
+//             } else {
+                
+//                 slide.classList.remove('active');
+//                 slide.classList.add('exit');
+//                 // slideContainer.removeChild(slide)
+//             }
+//         });
+
+//         console.log(slideSet.size)
+//         const sliders = slideSet.keys();
+//         let text = "";
+//         for (const x of sliders) {
+//         // text += x;
+//         console.log(x)
+//         }
+//     }
+
+//     // Function to handle forward button click
+//     function handleForwardSlide() {
+//         const slides = document.querySelectorAll('.currentCell');
+
+//         if (activeIndex === slides.length - 1) { // If on the last slide, add a new one
+//             currentMonth++;
+//             if (currentMonth > 12) {
+//                 currentMonth = 1;
+//                 currentYear++;
+//             }
+
+//             // slideContainer.addEventListener('divCreated', function(e){
+//             //     // Check if the slideContainer contains e.detail.div
+//             //     if (Array.from(slideContainer.children).includes(e.detail.div)) {
+//             //      slideContainer.removeChild(e.detail.div);
+//             //  }
+             
+//             //      console.log('A new div was created:', e.detail.div);
+//             //  })
+
+//             const wrapper = document.createElement('div');
+//             const newCalendar = new CalendarStructure(currentMonth, currentYear, 'next', wrapper, slideContainer);
+//             newCalendar.initializeCalendar();
+            
+//         }
+
+//         activeIndex++
+//         showSlide(activeIndex, 'next');
+//     }
+
+//     // Function to handle back button click
+//     function handleBackSlide() {
+//         // const activeSlide = document.querySelector(`.cell${activeIndex + 1}`);
+//         // if (activeIndex === 0 ) { // If on the first slide, add a new previous month
+//             // return
+//             currentMonth--;
+//             if (currentMonth <= 1) { // Go to December of the previous year
+//                 // return 
+//                 currentMonth = 12;
+//                 currentYear--;
+//                 // activeIndex = 0
+//                 // activeIndex--
+//             }
+//             // else {
+//             //      currentMonth--;
+//             // //     // activeIndex--
+//             //  }
+
+//             // slideContainer.addEventListener('divCreated', function(e){
+//             //     // Check if the slideContainer contains e.detail.div
+//             //     if (Array.from(slideContainer.children).includes(e.detail.div)) {
+//             //      slideContainer.removeChild(e.detail.div);
+//             //  }
+             
+//             //      console.log('A new div was created:', e.detail.div);
+//             //  })
+
+//             const wrapper = document.createElement('div');
+//             const newCalendar = new CalendarStructure(currentMonth, currentYear, 'prev', wrapper, slideContainer);
+//             newCalendar.initializeCalendar();
+//             console.log(newCalendar.isActive)
+
+//             // Recalculate activeIndex to reflect the newly added previous month
+//             // activeIndex = 0;
+//         // } 
+//         //  else {
+//         // if (activeIndex > 0){
+//             activeIndex--
+//             showSlide((activeIndex), 'prev');
+//         // }else{
+//         //     activeIndex++
+//         //     showSlide((activeIndex), 'prev');
+//         // }
+//         console.log(activeIndex)
+//             //= (activeIndex + 1) % slides.length;
+//     //   }
+//         //  showSlide((activeIndex), 'prev');
+//     }
+
+//     // Button event listeners
+//     forwardBtn.addEventListener('click', handleForwardSlide);
+//     backBtn.addEventListener('click', handleBackSlide);
+
+//     // Initial setup
+//     const wrapper = document.createElement('div');
+//     const initialCalendar = new CalendarStructure(currentMonth, currentYear, '', wrapper, slideContainer);
+//     initialCalendar.initializeCalendar();
+//     showSlide(activeIndex, '');
+// });
 import { getFirstDayOfMonth, getMonthname } from './getMonthDays.js';
 import getMonthDays from './getMonthDays.js';
 
-let currentMonth = 11; // Starts with January
+let currentMonth = 1; // Starts with January
 let activeIndex = 0; // Tracks the current active slide
 let currentYear = 2024; // Tracks the current year
 
@@ -265,14 +485,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const slideContainer = document.querySelector('.container-calendar');
     const forwardBtn = document.querySelector('.foward');
     const backBtn = document.querySelector('.back');
+    const slideSet = new Set();
+
+    // Helper function to create a unique slide identifier
+    function getSlideKey(month, year, animate) {
+        return `slide-${month}-${year}-${animate}`;
+    }
 
     // Helper function to create a calendar view
     function createCalendar(month, year, animatedClass, wrapper, container) {
         const displayMonth = month === 0 ? 1 : month; // Display January as "1" and December as "12"
         const displayYear = year;
-        // const wrapper = document.createElement('div');
+
         wrapper.className = `currentCell ${animatedClass}`;
         wrapper.classList.add(`cell${displayMonth}-${year}`);
+        wrapper.setAttribute('data-slide-key', getSlideKey(displayMonth, displayYear, animatedClass));
 
         const ul = document.createElement('ul');
         const h1 = document.createElement('h1');
@@ -295,8 +522,6 @@ document.addEventListener('DOMContentLoaded', () => {
             wrapper.append(span);
         }
 
-        container.append(wrapper);
-
         const firstDayIndex = getFirstDayOfMonth(displayMonth, displayYear);
         const daysInMonth = getMonthDays(displayMonth, displayYear);
         const spans = wrapper.querySelectorAll('span');
@@ -304,7 +529,17 @@ document.addEventListener('DOMContentLoaded', () => {
             span.textContent = index >= firstDayIndex && index - firstDayIndex < daysInMonth ? index - firstDayIndex + 1 : "";
         });
 
-        // console.log(calendar)
+        if (slideSet.has(wrapper) || !wrapper.classList.contains(`cell${displayMonth}-${year}`) ){
+            // slideSet.delete(wrapper);
+            // slideContainer.remove(wrapper) 
+            alert('exists')
+            
+        }else{
+            slideSet.add(wrapper)
+            container.append(wrapper);
+        }
+        
+        
     }
 
     // Calendar structure class to manage individual calendar cells
@@ -313,133 +548,107 @@ document.addEventListener('DOMContentLoaded', () => {
             this.month = month;
             this.year = year;
             this.animatedClass = animatedClass;
-            this.wrapper = wrapper
+            this.wrapper = wrapper;
             this.container = container;
             this.initializeCalendar = this.initializeCalendar.bind(this);
-
-            // Fire a custom event when the div is created
-            const event = new CustomEvent('divCreated', {
-                detail: { div: this.wrapper } // Attach the div to the event's details
-            });
-            this.container.dispatchEvent(event);
-
-            // this.container.addEventListener('divCreated', function(e){
-            //     // console.log('A new div was created:', e.detail.div)
-            //     console.log('A new div was created:', e.detail.div);
-            // })
         }
 
         initializeCalendar() {
-            
-            
-             createCalendar(this.month, this.year, this.animatedClass, this.wrapper, this.container);
-            
-
-            console.log(this.wrapper)
-            // if (this.wrapper){
-            //     createCalendar(this.month, this.year, this.animatedClass, this.wrapper, this.container);           
-            // }
-        }
-        get isActive() {
-            return this.animatedClass;
-        }
-        set animateClass(x){
-            return this.animatedClass = x;
-        }
-        set changeMonth(x){
-            return this.month = x;
+            createCalendar(this.month, this.year, this.animatedClass, this.wrapper, this.container);
         }
     }
 
     // Function to update the active slide with animations
-    function showSlide(index, direction='next') {
+    function showSlide(index, direction = 'next') {
         slideContainer.setAttribute('data-direction', direction);
-        const slides = document.querySelectorAll('.currentCell');
+        const slides = Array.from(slideSet.keys());
 
-        slides.forEach((slide, i) => {
+        if (index < 0 ){
+            
+            index = Math.abs(index);
+            // slideSet.delete(slides[index - 1]);
+            
+            // currentMonth--
+        }
+
+        slideSet.values().forEach((slide, i) => {
+            slide.classList.remove('active', 'exit');
             if (i === index) {
                 slide.classList.add('active');
                 slide.classList.remove('exit');
             } else {
-                
                 slide.classList.remove('active');
                 slide.classList.add('exit');
-                // slideContainer.removeChild(slide)
+                // slideSet.delete(slide + 1)
             }
         });
 
-        console.log(slides)
+        console.log(`SlideSet size: ${slideSet.size}`);
+        console.log(index)
     }
 
     // Function to handle forward button click
     function handleForwardSlide() {
-        const slides = document.querySelectorAll('.currentCell');
+        currentMonth++;
+        if (currentMonth > 12) {
+            currentMonth = 1;
+            currentYear++;
+        }
+        const slideKey = getSlideKey(currentMonth, currentYear, 'next');
 
-        if (activeIndex === slides.length - 1) { // If on the last slide, add a new one
-            currentMonth++;
-            if (currentMonth > 12) {
-                currentMonth = 1;
-                currentYear++;
-            }
+        console.log([...slideSet.keys()])
 
-            // slideContainer.addEventListener('divCreated', function(e){
-            //     // Check if the slideContainer contains e.detail.div
-            //     if (Array.from(slideContainer.children).includes(e.detail.div)) {
-            //      slideContainer.removeChild(e.detail.div);
-            //  }
-             
-            //      console.log('A new div was created:', e.detail.div);
-            //  })
-
+        // Check if the slide already exists
+        if (![...slideSet.keys()].some(slide => slide.getAttribute('data-slide-key') === slideKey)) {
             const wrapper = document.createElement('div');
             const newCalendar = new CalendarStructure(currentMonth, currentYear, 'next', wrapper, slideContainer);
             newCalendar.initializeCalendar();
-            
+
+            // Add to Set and limit size
+            //  slideSet.add(wrapper);
+            // limitSlideSetSize(5); // Keep only the last 5 slides
         }
 
-        activeIndex++
+        activeIndex++;
         showSlide(activeIndex, 'next');
+
+        
     }
 
     // Function to handle back button click
     function handleBackSlide() {
-        // const activeSlide = document.querySelector(`.cell${activeIndex + 1}`);
-        if (activeIndex === 0 ) { // If on the first slide, add a new previous month
-            // return
-            currentMonth--;
-            if (currentMonth <= 1) { // Go to December of the previous year
-                // return 
-                currentMonth = 12;
-                currentYear--;
-                // activeIndex = 0
-                // activeIndex--
-            }
-            // else {
-            //      currentMonth--;
-            // //     // activeIndex--
-            //  }
+        
+        currentMonth--;
+        if (currentMonth < 1) {
+            currentMonth = 12;
+            currentYear--;
+        }
+        const slideKey = getSlideKey(currentMonth, currentYear, 'prev');
 
-            // slideContainer.addEventListener('divCreated', function(e){
-            //     // Check if the slideContainer contains e.detail.div
-            //     if (Array.from(slideContainer.children).includes(e.detail.div)) {
-            //      slideContainer.removeChild(e.detail.div);
-            //  }
-             
-            //      console.log('A new div was created:', e.detail.div);
-            //  })
+        console.log([...slideSet.keys()])
 
+        // Check if the slide already exists
+        if (![...slideSet.keys()].some(slide => slide.getAttribute('data-slide-key') === slideKey)) {
             const wrapper = document.createElement('div');
             const newCalendar = new CalendarStructure(currentMonth, currentYear, 'prev', wrapper, slideContainer);
             newCalendar.initializeCalendar();
-            console.log(newCalendar.isActive)
 
-            // Recalculate activeIndex to reflect the newly added previous month
-            // activeIndex = 0;
-        } 
-        //  else {
-            activeIndex--//= (activeIndex + 1) % slides.length;
-    //   }
-        showSlide(Math.abs(activeIndex), 'prev');
+            // Add to Set and limit size
+            // slideSet.add(wrapper);
+            // limitSlideSetSize(5); // Keep only the last 5 slides
+        }
+            activeIndex--;
+            showSlide(activeIndex, 'prev');
+        
+    }
+
+    // Helper function to limit the number of slides stored in the Set
+    function limitSlideSetSize(maxSize) {
+        while (slideSet.size > maxSize) {
+            const firstSlide = slideSet.values().next().value; // Get the first element in the Set
+            slideSet.delete(firstSlide);
+            slideContainer.removeChild(firstSlide); // Remove the slide from the DOM
+        }
     }
 
     // Button event listeners
@@ -450,6 +659,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const wrapper = document.createElement('div');
     const initialCalendar = new CalendarStructure(currentMonth, currentYear, '', wrapper, slideContainer);
     initialCalendar.initializeCalendar();
+    // slideSet.add(wrapper);
     showSlide(activeIndex, '');
 });
-
